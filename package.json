@@ -1,0 +1,20 @@
+{
+  "name": "rpt01-quinces",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rpt01-quinces/rpt01-quinces.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rpt01-quinces/rpt01-quinces/issues"
+  },
+  "homepage": "https://github.com/rpt01-quinces/rpt01-quinces#readme"
+}
