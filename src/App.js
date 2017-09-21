@@ -8,22 +8,13 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      count: 0,
+
     };
   }
 
   render() {
     return (
-      <div>
-      <button
-        onClick={() => {
-          this.setState({ count: this.state.count + 1 });
-        }}
-      >
-        Hello: {this.state.count}
-      </button>
-      <div>TEST</div>
-      </div>
+      <h1>Hello world</h1>
 
     );
   }
