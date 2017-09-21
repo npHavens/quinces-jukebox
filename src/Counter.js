@@ -1,9 +1,10 @@
 import React from 'react';
+import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router'
 
 /**
  * A counter button: tap the button to increase the count.
  */
-class Counter extends React.Component {
+class App extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -19,7 +20,7 @@ class Counter extends React.Component {
           this.setState({ count: this.state.count + 1 });
         }}
       >
-        Count: {this.state.count}
+        Hello: {this.state.count}
       </button>
       <div>TEST</div>
       </div>
@@ -27,4 +28,4 @@ class Counter extends React.Component {
     );
   }
 }
-export default Counter;
+export default App;
