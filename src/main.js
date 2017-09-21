@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App from './components/App';
+import { BrowserRouter } from 'react-router-dom'
 
 document.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
-    React.createElement(App),
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>,
     document.getElementById('app')
   );
 });

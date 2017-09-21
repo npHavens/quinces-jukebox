@@ -1,12 +1,14 @@
 import React from 'react';
-import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router'
+import { Switch, Route } from 'react-router-dom';
+
+import Container from './Container';
 
 /**
  * A counter button: tap the button to increase the count.
  */
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
 
     };
@@ -14,8 +16,9 @@ class App extends React.Component {
 
   render() {
     return (
-      <h1>Hello world</h1>
-
+      <div>
+        <Container/>
+      </div>
     );
   }
 }
