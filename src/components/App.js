@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import Navbar from './Navbar';
 import Container from './Container';
 
 /**
@@ -17,6 +18,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <Navbar/>
         <Container/>
       </div>
     );

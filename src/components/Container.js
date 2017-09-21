@@ -3,10 +3,17 @@ import { Switch, Route } from 'react-router-dom';
 
 import Playlist from './Playlist';
 import Signup from './Signup';
+import Login from './Login';
+import Search from './Search';
 
 const Container = () => (
     <main>
-      <h1>hello world</h1>
+      <Switch>
+        <Route exact path='/' component={Playlist}/>
+        <Route exact path='/signup' component={Signup}/>
+        <Route exact path='/login' component={Login}/>
+        <Route exact path='/search' component={Search}/>
+      </Switch>
     </main>
 )
 
