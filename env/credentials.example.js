@@ -1,4 +1,2 @@
-module.exports = {
-  client_id = 'INSERT CLIENT_ID',
-  client_secret ='INSERT CLIENT_SECRET'
-};
+exports.client_id = 'INSERT CLIENT_ID',
+exports.client_secret ='INSERT CLIENT_SECRET'
