@@ -6,13 +6,14 @@ import Playlist from './Playlist';
 import Signup from './Signup';
 import Login from './Login';
 import Search from './Search';
+import getAllSongs from '../redux/reducer';
 
 
 const Container = () => (
     <main>
       <MuiThemeProvider>
         <Switch>
-          <Route exact path='/' component={Playlist}/>
+          <Route exact path='/' component={Playlist} onEnter={getAllSongs}/>
           <Route exact path='/signup' component={Signup}/>
           <Route exact path='/login' component={Login}/>
           <Route exact path='/search' component={Search}/>

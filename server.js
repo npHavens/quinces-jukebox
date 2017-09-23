@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const webpackConfig = require('./webpack.config.js');
 const spotifyHelpers = require('./helpers/spotifyHelpers.js');
 const app = express();
+const sampleData = require('./src/lib/sampleData');
 
 const compiler = webpack(webpackConfig);
 
@@ -18,6 +19,10 @@ app.use(webpackDevMiddleware(compiler, {
   },
   historyApiFallback: true,
 }));
+
+app.get('/songs', function(req, res) {
+  res.send(sampleData);
+});
 
 const server = app.listen(3000, function() {
   const host = server.address().address;

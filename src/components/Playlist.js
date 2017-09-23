@@ -12,7 +12,6 @@ class Playlist extends React.Component {
     }
   }
   componentDidMount() {
-    console.log(sampleData.tracks.items)
     getAllSongs();
   }
 
@@ -22,7 +21,7 @@ class Playlist extends React.Component {
         {
           this.props.songs && this.props.songs.map((song) => {
             return (
-              <PlaylistEntry Song={song}/>
+              <PlaylistEntry Song={song} />
             )
           })
         }

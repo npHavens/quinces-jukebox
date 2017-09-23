@@ -3,6 +3,8 @@ const sampleData =
   "tracks" : {
     "href" : "https://api.spotify.com/v1/search?query=purple+rain&type=track&market=US&offset=0&limit=10",
     "items" : [ {
+      "upVoteCount": 5,
+      "downVoteCount": 3,
       "album" : {
         "album_type" : "album",
         "artists" : [ {
@@ -67,6 +69,8 @@ const sampleData =
       "type" : "track",
       "uri" : "spotify:track:54X78diSLoUDI3joC2bjMz"
     }, {
+      "upVoteCount": 7,
+      "downVoteCount": 3,
       "album" : {
         "album_type" : "album",
         "artists" : [ {
@@ -131,6 +135,8 @@ const sampleData =
       "type" : "track",
       "uri" : "spotify:track:51H2y6YrNNXcy3dfc3qSbA"
     }, {
+      "upVoteCount": 5,
+      "downVoteCount": 8,
       "album" : {
         "album_type" : "album",
         "artists" : [ {
@@ -195,6 +201,8 @@ const sampleData =
       "type" : "track",
       "uri" : "spotify:track:0QeI79sp1vS8L3JgpEO7mD"
     }, {
+      "upVoteCount": 5,
+      "downVoteCount": 8,
       "album" : {
         "album_type" : "album",
         "artists" : [ {
@@ -259,6 +267,8 @@ const sampleData =
       "type" : "track",
       "uri" : "spotify:track:6fBwVe6udYdnRqwqo06if8"
     }, {
+      "upVoteCount": 0,
+      "downVoteCount": 3,
       "album" : {
         "album_type" : "album",
         "artists" : [ {
@@ -323,6 +333,8 @@ const sampleData =
       "type" : "track",
       "uri" : "spotify:track:1BNtFSws7fjbn9aVBPA79j"
     }, {
+      "upVoteCount": 5,
+      "downVoteCount": 1,
       "album" : {
         "album_type" : "album",
         "artists" : [ {
@@ -387,6 +399,8 @@ const sampleData =
       "type" : "track",
       "uri" : "spotify:track:0khi86hc79RfsRC0rrkkA2"
     }, {
+      "upVoteCount": 10,
+      "downVoteCount": 3,
       "album" : {
         "album_type" : "album",
         "artists" : [ {
@@ -451,6 +465,8 @@ const sampleData =
       "type" : "track",
       "uri" : "spotify:track:2soBvUQBf5rbMj9HIyhzzK"
     }, {
+      "upVoteCount": 5,
+      "downVoteCount": 8,
       "album" : {
         "album_type" : "album",
         "artists" : [ {
@@ -515,6 +531,8 @@ const sampleData =
       "type" : "track",
       "uri" : "spotify:track:765k9tDIFOnoOfkO2cgitB"
     }, {
+      "upVoteCount": 0,
+      "downVoteCount": 0,
       "album" : {
         "album_type" : "album",
         "artists" : [ {
@@ -579,6 +597,8 @@ const sampleData =
       "type" : "track",
       "uri" : "spotify:track:1vfvy1Of0iJLDjh5eMfVyI"
     }, {
+      "upVoteCount": 5,
+      "downVoteCount": 9,
       "album" : {
         "album_type" : "album",
         "artists" : [ {
@@ -654,3 +674,5 @@ const sampleData =
 export default sampleData;
 
 window.sampleData = sampleData;
+
+// module.exports.sampleData = sampleData;
