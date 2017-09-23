@@ -7,9 +7,7 @@ import sampleData from '../lib/sampleData';
 class Playlist extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
 
-    }
   }
   componentDidMount() {
     getAllSongs();
