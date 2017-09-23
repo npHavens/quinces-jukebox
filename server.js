@@ -30,6 +30,12 @@ const server = app.listen(3000, function() {
   console.log('Example app listening at http://%s:%s', host, port);
 });
 
+// spotifyHelpers.getTrackSearchResults('') // get the query string from CLIENT 
+//     .then((result) => {
+//       console.log(result.tracks.items);
+//     });
+  
+
 // GET at /
 // render home page
 
@@ -38,6 +44,12 @@ const server = app.listen(3000, function() {
 // fetch top 10 songs from songs collection and send to client
 
 // GET at /songs/search
+app.get('/songs/search', (req, res) => {
+  spotifyHelpers.getTrackSearchResults('Sound of Silence') // get the query string from CLIENT 
+    .then((result) => {
+        res.send(result);
+      });
+});
 // initiate ajax call
 
 // POST at /songs
