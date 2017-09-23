@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const PlaylistEntry = () => (
-  <div>
-    <h1>playlist entry component</h1>
+const PlaylistEntry = (props) => (
+  <div className="row">
+    <h2>{props.Song.name}</h2>
   </div>
 )
 
-export default PlaylistEntry;
+const mapDispatch = { };
+export default connect(null, mapDispatch)(PlaylistEntry);

@@ -1,3 +1,4 @@
+const sampleData = 
 {
   "tracks" : {
     "href" : "https://api.spotify.com/v1/search?query=purple+rain&type=track&market=US&offset=0&limit=10",
@@ -649,3 +650,7 @@
     "total" : 1434
   }
 }
+
+export default sampleData;
+
+window.sampleData = sampleData;

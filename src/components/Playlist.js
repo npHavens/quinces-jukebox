@@ -1,14 +1,36 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getAllSongs } from '../redux/reducer';
 import PlaylistEntry from './PlaylistEntry';
+import sampleData from '../lib/sampleData';
 
-const Playlist = (props) => (
-  <div>
-    {/* {props.songs.map(song => 
-      <PlaylistEntry/>
-    )} */}
+class Playlist extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
 
-    <PlaylistEntry/>
-  </div>
-)
+    }
+  }
+  componentDidMount() {
+    console.log(sampleData.tracks.items)
+    getAllSongs();
+  }
 
-export default Playlist;
+  render() {
+      return (
+        <div>
+        {
+          this.props.songs && this.props.songs.map((song) => {
+            return (
+              <PlaylistEntry Song={song}/>
+            )
+          })
+        }
+        </div>
+      )
+  }
+}
+
+const mapState = ({songs}) => ({songs});
+const mapDispatch = {getAllSongs};
+export default connect(mapState, mapDispatch)(Playlist);
