@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 
 const SongSchema = new Schema({
     name: String,
+    userID: Number,
     image: String,
     upVoteCount: Number,
     downVoteCount: Number,
