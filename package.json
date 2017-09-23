@@ -9,11 +9,16 @@
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
     "grunt-shell": "^2.1.0",
+<<<<<<< HEAD
     "mocha": "^3.5.3",
     "mongoose": "^4.11.12",
     "nodemon": "^1.12.1",
+=======
+    "material-ui": "^0.19.2",
+>>>>>>> Added PlaylistEntry component and material-ui
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "webpack-dev-middleware": "^1.10.0"
   },

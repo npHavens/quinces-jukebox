@@ -1,9 +1,13 @@
 import React from 'react';
+import PlaylistEntry from './PlaylistEntry';
 
-const Playlist = () => (
+const Playlist = (props) => (
   <div>
-    <h1>playlist component</h1>
-    <p>Any components that are part of the play list should be imported and added here</p>
+    {/* {props.songs.map(song => 
+      <PlaylistEntry/>
+    )} */}
+
+    <PlaylistEntry/>
   </div>
 )
 
