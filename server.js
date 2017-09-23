@@ -46,9 +46,9 @@ const server = app.listen(3000, function() {
 // GET at /songs/search
 app.get('/songs/search', (req, res) => {
   spotifyHelpers.getTrackSearchResults('Sound of Silence') // get the query string from CLIENT 
-      .then((result) => {
-          res.send(result);
-       });
+    .then((result) => {
+        res.send(result);
+      });
 });
 // initiate ajax call
 
