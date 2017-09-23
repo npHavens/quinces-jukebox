@@ -7,6 +7,9 @@ const UserSchema = new Schema({
     name: String,
     votes: {
         // Song.name: +1/-1
+    },
+    songs: {
+
     }
 });
 
