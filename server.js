@@ -23,3 +23,33 @@ const server = app.listen(3000, function() {
   const port = server.address().port;
   console.log('Example app listening at http://%s:%s', host, port);
 });
+
+// GET at /
+// render home page
+
+// ** songs **
+// GET at /songs
+// fetch top 10 songs from songs collection and send to client
+
+// GET at /songs/search
+// initiate ajax call
+
+// POST at /songs
+// add song to both users collection and songs collection
+
+// POST at /songs/votes
+// update vote on songs collection
+
+// ** users **
+// POST at /login
+// direct to song playlist page
+
+// POST at /signup
+// add user to users collection
+// direct to song playlist page
+
+// GET at /logout
+// direct to home page
+
+// GET at all other routes
+// send 404 to client
