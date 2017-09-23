@@ -1,5 +1,4 @@
 import axios from "axios";
-import sampleData from '../lib/sampleData';
 
 /////////////////CONSTANTS/////////////////////
 const GET_ALL_SONGS = "GET_ALL_SONGS";
@@ -21,22 +20,23 @@ const upVoteSong = (song) => {
   }
 }
 
-const onSearchSong = (text) => {
-  type: SEARCH
+const onSearchSong = (results) => {
+  type: SEARCH,
+  results
 
 }
 
 /////////////////REDUCER/////////////////////
 //initiate your starting state
 let initial = {
-  songs: sampleData.tracks.items,
+  songs: [],
   results: []
 };
 
 const reducer = (state = initial, action) => {
 
   switch (action.type) {
-    case 'GET_ALL_SONGS':
+    case GET_ALL_SONGS:
       return Object.assign({}, state, {songs: action.songs});
     case INCREMENT:
       let newArr = state.songs.map((song) => {
@@ -83,14 +83,14 @@ export const onUpVote = (song) => dispatch => {
   //   })
 }
 
-export const onSearch = (query) => dispatch => {
+export const onSearch = () => dispatch => {
   axios.get('localhost:3000/songs/search')
     .then((response) => {
       console.log(response.data);
       return response.data;
     })
     .then((results) => {
-      dispatch(onSearchSong(results))
+      dispatch(onSearchSong(results));
     })
     .catch((err) => {
       console.error.bind(err);

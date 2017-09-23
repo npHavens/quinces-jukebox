@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 
-const SearchEntry = () => (
+const SearchEntry = (props) => (
   <div>
-   <p>hello world</p>
+   <p>{props.Result.name}</p>
   </div>
 )
 

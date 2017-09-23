@@ -671,8 +671,8 @@ const sampleData =
   }
 }
 
-export default sampleData;
+// export default sampleData;
 
-window.sampleData = sampleData;
+// window.sampleData = sampleData;
 
-// module.exports.sampleData = sampleData;
+module.exports.sampleData = sampleData;
