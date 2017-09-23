@@ -3,9 +3,22 @@ import sampleData from '../lib/sampleData';
 
 /////////////////CONSTANTS/////////////////////
 const GET_ALL_SONGS = "GET_ALL_SONGS";
+const INCREMENT = "INCREMENT";
 
 /////////////////ACTIONS//////////////
-const getSongs = (songs) => ({type: GET_ALL_SONGS, songs});
+const getSongs = (songs) => {
+  return {
+    type: 'GET_ALL_SONGS',
+    songs
+  }
+};
+
+// const upVoteSong = (song) => {
+//   return {
+//     type: INCREMENT,
+//     song
+//   }
+// }
 
 /////////////////REDUCER/////////////////////
 //initiate your starting state
@@ -14,9 +27,16 @@ let initial = {
 };
 
 const reducer = (state = initial, action) => {
+
   switch (action.type) {
-    case GET_ALL_SONGS:
+    case 'GET_ALL_SONGS':
       return Object.assign({}, state, {songs: action.songs.objects});
+    // case INCREMENT:
+    //   return state.map(song =>
+    //     (todo.id === action.id) 
+    //       ? {...song, upVoteCount: upVoteCount++}
+    //       : todo
+    //   )
     default:
       return state;
   }
@@ -26,13 +46,9 @@ export default reducer;
 
 /////////////// ACTION DISPATCHER FUNCTIONS///////////////////
 export const getAllSongs = () => dispatch => {
-  console.log('hello world');
-  let songs = sampleData.tracks.items
-  console.log(songs);
-  dispatch(getSongs(songs));
-  // axios.get(`insert request link here`)
+  // axios.get(`localhost:3000/songs`)
   //   .then((response) => {
-  //     return response.data;
+  //     return response.data.tracks.items;
   //   })
   //   .then((songs) => {
   //     dispatch(getSongs(songs))
@@ -41,3 +57,7 @@ export const getAllSongs = () => dispatch => {
   //     console.error.bind(err);
   //   })
 };
+
+export const onUpVote = (song) => dispatch => {
+  console.log('hello');
+}
