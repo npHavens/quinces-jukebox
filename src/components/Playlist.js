@@ -23,7 +23,8 @@ class Playlist extends React.Component {
   getAllSongs() {
     axios.get(`/songs`)
     .then((response) => {
-      this.setState({ songs: response.data.tracks.items})
+      console.log(response);
+      this.setState({ songs: response.data})
     })
     .catch((err) => {
       console.error.bind(err);
