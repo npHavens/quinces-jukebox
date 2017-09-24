@@ -21,7 +21,6 @@ app.use(webpackDevMiddleware(compiler, {
 
 // *** Static Assets ***
 app.use(express.static(__dirname + '/www'));
-
 app.use(cookieParser);
 
 // *** Database ***
@@ -54,6 +53,23 @@ app.get('/songs/search', (req, res) => {
     });
 });
 
+// POST at /songs
+app.post('/songs', (req, res) => {
+  new Song({
+    name: "Sound of Silence",
+    userID: 1,
+    image: "https://i.scdn.co/image/cc3bbe5a796b2b23384862d046f55e7118380db9",
+    upVoteCount: 0,
+    downVoteCount: 0,
+    netCount: 0
+  }).save((err) => {
+    if(err) res.json(err);
+    else res.status(201).send('Sucessfully inserted');
+  })
+})
+
+
+// POST at /songs
 // add song to both users collection and songs collection
 app.post('/songs', (req, res) => {
   var newSong = new Song(req.body);
@@ -90,6 +106,17 @@ app.post('/signup', function(req, res) {
 // GET at /logout
 // direct to home page
 
+
+app.get('/hostLogin', (req, res) => {
+  console.log('logging in host')
+  //res.send('logging in host')
+  res.send('logging in host')
+  //spotifyHelpers.handleHostLogin(req, res);
+});
+
+app.get('/callback', (req, res) => {
+  spotifyHelpers.handleRedirectAfterLogin(req, res);
+});
 // send 404 to client
 app.get('/*', function(req, res) {
   res.status(404).send('Not Found');
