@@ -1,17 +1,46 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { getAllSongs } from '../redux/reducer';
+import axios from 'axios';
+// import { connect } from 'react-redux';
+// import { getAllSongs } from '../redux/reducer';
 import PlaylistEntry from './PlaylistEntry';
-import sampleData from '../lib/sampleData';
+
 import Player from './Player.js';
+
 
 class Playlist extends React.Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      songs: []
+    }
+    this.getAllSongs = this.getAllSongs.bind(this);
+    this.upVote = this.upVote.bind(this);
   }
   componentDidMount() {
-    getAllSongs();
+    this.getAllSongs();
+  }
+
+  getAllSongs() {
+    axios.get(`/songs`)
+    .then((response) => {
+      this.setState({ songs: response.data.tracks.items})
+    })
+    .catch((err) => {
+      console.error.bind(err);
+    })
+  }
+
+  upVote(song) {
+    // need to check if song as already been voted
+    // on by person
+    song.upVoteCount++;
+    axios.put('/song', song)
+    .then((response) => {
+      this.getAllSongs();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   render() {
@@ -19,9 +48,9 @@ class Playlist extends React.Component {
         <div>
         <Player />
         {
-          this.props.songs && this.props.songs.map((song) => {
+          this.state.songs && this.state.songs.map((song) => {
             return (
-              <PlaylistEntry Song={song} />
+              <PlaylistEntry upVote={this.upVote} Song={song} />
             )
           })
         }
@@ -30,6 +59,8 @@ class Playlist extends React.Component {
   }
 }
 
-const mapState = ({songs}) => ({songs});
-const mapDispatch = {getAllSongs};
-export default connect(mapState, mapDispatch)(Playlist);
+export default Playlist;
+// REDUX CODE
+// const mapState = ({songs}) => ({songs});
+// const mapDispatch = {getAllSongs};
+// export default connect(mapState, mapDispatch)(Playlist);
