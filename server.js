@@ -32,9 +32,9 @@ const spotifyHelpers = require('./helpers/spotifyHelpers.js');
 // GET at /
 // render home page
 
-// fetch top 10 songs from songs collection and send to client
+// fetch top 10 songs by netVoteCount and send to client
 app.get('/songs', function(req, res) {
-  Song.find({}).sort({upVoteCount: 'descending'})
+  Song.find({}).sort({netVoteCount: 'descending'}).limit(10)
   .then(function(songs) {
     res.json(songs);
   });
