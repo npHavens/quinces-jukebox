@@ -1,16 +1,12 @@
+// *** Express ***
 const express = require('express');
+const app = express();
+
+// *** Webpack ***
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config.js');
-const spotifyHelpers = require('./helpers/spotifyHelpers.js');
-const app = express();
-const sampleData = require('./src/lib/sampleData');
-const User = require('./db/user');
-const Song = require('./db/song');
 const compiler = webpack(webpackConfig);
-
-app.use(express.static(__dirname + '/www'));
-
 app.use(webpackDevMiddleware(compiler, {
   hot: true,
   filename: 'bundle.js',
@@ -21,39 +17,39 @@ app.use(webpackDevMiddleware(compiler, {
   historyApiFallback: true,
 }));
 
+// *** Static Assets ***
+app.use(express.static(__dirname + '/www'));
+
+// *** Database ***
+const User = require('./db/user');
+const Song = require('./db/song');
+
+// *** Helper ***
+const spotifyHelpers = require('./helpers/spotifyHelpers.js');
+const sampleData = require('./src/lib/sampleData');
+
+// *** Routes ***
+
 app.get('/songs', function(req, res) {
   res.send(sampleData);
 });
 
-const server = app.listen(3000, function() {
-  const host = server.address().address;
-  const port = server.address().port;
-  console.log('Example app listening at http://%s:%s', host, port);
-});
-
-// spotifyHelpers.getTrackSearchResults('') // get the query string from CLIENT 
-//     .then((result) => {
-//       console.log(result.tracks.items);
-//     });
-  
-
 // GET at /
 // render home page
 
-// ** songs **
 // GET at /songs
 // fetch top 10 songs from songs collection and send to client
 
 // GET at /songs/search
 app.get('/songs/search', (req, res) => {
   console.log(req.query.query);
-  spotifyHelpers.getTrackSearchResults(req.query.query) // get the query string from CLIENT 
+  spotifyHelpers.getTrackSearchResults(req.query.query) // get the query string from CLIENT
     .then((result) => {
         res.send(result);
       });
 });
 
-// TO SAVE THE SONG TO THE DATABASE
+// POST at /songs
 app.post('/songs', (req, res) => {
   new Song({
     name: "Sound of Silence",
@@ -75,7 +71,6 @@ app.post('/songs', (req, res) => {
 // POST at /songs/votes
 // update vote on songs collection
 
-// ** users **
 // POST at /login
 // direct to song playlist page
 
@@ -88,3 +83,8 @@ app.post('/songs', (req, res) => {
 
 // GET at all other routes
 // send 404 to client
+
+// *** Server ***
+const server = app.listen(3000, function() {
+  console.log('Listening at http://localhost:3000');
+});
