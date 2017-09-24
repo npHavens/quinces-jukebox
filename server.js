@@ -1,12 +1,14 @@
 // *** Express ***
 const express = require('express');
 const app = express();
+const cookieParser = require('cookie-parser');
 
 // *** Webpack ***
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config.js');
 const compiler = webpack(webpackConfig);
+
 app.use(webpackDevMiddleware(compiler, {
   hot: true,
   filename: 'bundle.js',
@@ -19,6 +21,8 @@ app.use(webpackDevMiddleware(compiler, {
 
 // *** Static Assets ***
 app.use(express.static(__dirname + '/www'));
+
+app.use(cookieParser);
 
 // *** Database ***
 const User = require('./db/user');

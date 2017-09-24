@@ -7,7 +7,11 @@
     "babel-preset-latest": "^6.22.0",
     "babel-preset-react": "^6.22.0",
     "bluebird": "^3.5.0",
+<<<<<<< HEAD
     "body-parser": "^1.18.2",
+=======
+    "cookie-parser": "^1.4.3",
+>>>>>>> add cookie-parser for host authentication
     "express": "^4.14.1",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
