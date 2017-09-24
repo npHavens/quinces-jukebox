@@ -675,4 +675,6 @@ const sampleData =
 
 // window.sampleData = sampleData;
 
+
 module.exports.sampleData = sampleData;
+module.exports = sampleData;
