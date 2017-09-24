@@ -1,6 +1,8 @@
 // *** Express ***
 const express = require('express');
 const app = express();
+const querystring = require('querystring');
+const cookieParser = require('cookie-parser');
 
 // *** Webpack ***
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -31,6 +33,7 @@ app.use(bodyParser.json());
 
 // *** Helper ***
 const spotifyHelpers = require('./helpers/spotifyHelpers.js');
+app.use(cookieParser());
 
 // *** Routes ***
 
@@ -71,6 +74,13 @@ app.put('/song', function(req, res) {
   });
 });
 
+
+// POST at /songs
+// add song to both users collection and songs collection
+
+// POST at /songs/votes
+
+
 // POST at /login
 // direct to song playlist page
 
@@ -86,6 +96,26 @@ app.post('/signup', function(req, res) {
 // GET at /logout
 // direct to home page
 
+
+
+//// *** Host Authentication Routes ***
+
+app.get('/hostLogin', (req, res) => {
+  console.log('logging in host');
+  spotifyHelpers.handleHostLogin(req, res);
+})
+
+app.get('/callback', (req, res) => {
+  console.log('redirecting');
+  spotifyHelpers.redirectAfterLogin(req, res);
+})
+
+// send 404 to client
+app.get('/*', function(req, res) {
+  res.status(404).send('Not Found');
+});
+
+
 // send 404 to client
 app.get('/*', function(req, res) {
   res.status(404).send('Not Found');
@@ -95,3 +125,4 @@ app.get('/*', function(req, res) {
 const server = app.listen(3000, function() {
   console.log('Listening at http://localhost:3000');
 });
+
