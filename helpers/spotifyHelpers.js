@@ -1,10 +1,11 @@
 const credentials = require('../env/credentials.js');
-const request = require('request');
 const Promise = require('bluebird');
 const cookieParser = require('cookie-parser');
+const request = require('request');
+const querystring = require('querystring');
 
 
-const authOptions = {
+const searchAuthOptions = {
   url: 'https://accounts.spotify.com/api/token',
   headers: {
     'Authorization': 'Basic ' + (new Buffer(credentials.client_id + ':' + credentials.client_secret).toString('base64'))
@@ -27,7 +28,7 @@ const generateRandomString = (length) => {
 
 exports.getTrackSearchResults = (queryString) => {
   return new Promise((resolve, reject) => {
-    request.post(authOptions, (error, response, body) => {
+    request.post(searchAuthOptions, (error, response, body) => {
       if (!error && response.statusCode === 200) {
         const token = body.access_token;
         const options = {
@@ -62,6 +63,58 @@ exports.handleHostLogin = (req, res) => {
     }));
 };
 
-exports.redirectAfterLogin = (req, response) => {
+exports.redirectAfterLogin = (req, res) => {
+  const code = req.query.code || null;
+  const state = req.query.state || null;
+  const storedState = req.cookies ? req.cookies['spotify_auth_state'] : null;
 
+  if (state === null || state !== storedState) {
+    res.redirect('/#' +
+      querystring.stringify({
+        error: 'state_mismatch'
+      }));
+  } else {
+    res.clearCookie('spotify_auth_state');
+    const playerAuthOptions = {
+      url: 'https://accounts.spotify.com/api/token',
+      form: {
+        code: code,
+        redirect_uri: 'http://localhost:3000/callback',
+        grant_type: 'authorization_code'
+      },
+      headers: {
+        'Authorization': 'Basic ' + (new Buffer(credentials.client_id + ':' + credentials.client_secret).toString('base64'))
+      },
+      json: true
+    };
+  }
+
+  request.post(playerauthOptions, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+
+      const access_token = body.access_token;
+      const refresh_token = body.refresh_token;
+
+      const options = {
+        url: "https://api.spotify.com/v1/me/player/devices",
+        headers: { 'Authorization': 'Bearer ' + access_token },
+        json: true
+      };
+
+      // use the access token to access the Spotify Web API
+      //console.log(refresh_token)
+
+      // we can also pass the token to the browser to make requests from there
+      res.redirect('http://localhost:3000/#' +
+        querystring.stringify({
+          access_token: access_token,
+          refresh_token: refresh_token
+        }));
+    } else {
+      res.redirect('/#' +
+        querystring.stringify({
+          error: 'invalid_token'
+        }));
+    }
+  });
 };

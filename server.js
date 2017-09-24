@@ -21,7 +21,6 @@ app.use(webpackDevMiddleware(compiler, {
 
 // *** Static Assets ***
 app.use(express.static(__dirname + '/www'));
-
 app.use(cookieParser);
 
 // *** Database ***
@@ -67,6 +66,17 @@ app.post('/songs', (req, res) => {
     else res.status(201).send('Sucessfully inserted');
   })
 })
+
+app.get('/hostLogin', (req, res) => {
+  console.log('logging in host')
+  //res.send('logging in host')
+  res.send('logging in host')
+  //spotifyHelpers.handleHostLogin(req, res);
+});
+
+app.get('/callback', (req, res) => {
+  spotifyHelpers.handleRedirectAfterLogin(req, res);
+});
 
 // POST at /songs
 // add song to both users collection and songs collection
