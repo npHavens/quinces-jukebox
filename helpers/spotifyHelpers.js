@@ -1,6 +1,8 @@
 const credentials = require('../env/credentials.js');
 const request = require('request');
 const Promise = require('bluebird');
+const cookieParser = require('cookie-parser');
+
 
 const authOptions = {
   url: 'https://accounts.spotify.com/api/token',
