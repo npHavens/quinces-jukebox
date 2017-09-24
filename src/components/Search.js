@@ -16,6 +16,7 @@ class Search extends React.Component{
     }
     this.onSearch = this.onSearch.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onAdd = this.onAdd.bind(this);
   }
 
   onSearch(query){
@@ -38,6 +39,23 @@ class Search extends React.Component{
     this.setState({query:query});
   }
 
+  onAdd(song) {
+    console.log(song);
+    let newSong = {};
+    newSong.name = song.name;
+    newSong.upVoteCount = 1;
+    newSong.downVoteCount = 0;
+    newSong.netCount = 1;
+    newSong.image = song.album.images[0];
+    axios.post('/songs', newSong)
+    .then((response) => {
+      console.log(response)
+    })
+    .catch((err) => {
+      console.log(error);
+    })
+  }
+
   render() {
     return (
       <div>
@@ -47,7 +65,7 @@ class Search extends React.Component{
         {
         this.state.results && this.state.results.map((result) => {
           return (
-            <SearchEntry Result={result}/>
+            <SearchEntry onAdd={this.onAdd} Result={result}/>
           )
         })
       }
