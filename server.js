@@ -5,7 +5,8 @@ const webpackConfig = require('./webpack.config.js');
 const spotifyHelpers = require('./helpers/spotifyHelpers.js');
 const app = express();
 const sampleData = require('./src/lib/sampleData');
-
+const User = require('./db/user');
+const Song = require('./db/song');
 const compiler = webpack(webpackConfig);
 
 app.use(express.static(__dirname + '/www'));
@@ -50,7 +51,22 @@ app.get('/songs/search', (req, res) => {
         res.send(result);
       });
 });
-// initiate ajax call
+
+// TO SAVE THE SONG TO THE DATABASE
+app.post('/songs', (req, res) => {
+  new Song({
+    name: "Sound of Silence",
+    userID: 1,
+    image: "https://i.scdn.co/image/cc3bbe5a796b2b23384862d046f55e7118380db9",
+    upVoteCount: 0,
+    downVoteCount: 0,
+    netCount: 0
+  }).save((err) => {
+    if(err) res.json(err);
+    // res.status(200).send('some message');
+    else res.status(201).send('Sucessfully inserted');
+  })
+})
 
 // POST at /songs
 // add song to both users collection and songs collection
