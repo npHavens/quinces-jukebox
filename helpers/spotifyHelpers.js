@@ -32,14 +32,12 @@ exports.getTrackSearchResults = (queryString) => {
       }
     });
   });
-}
+};
 
-exports.getSpotifyToken = () => {
-   return new Promise((resolve, reject) => {
-    request.post(authOptions, (error, response, body) => {
-      if (!error && response.statusCode === 200) {
-        resolve(body.access_token);
-      }
-    });
-  });
+exports.handleHostLogin = (req, res) => {
+
+};
+
+exports.redirectAfterLogin = (req, response) => {
+
 };
