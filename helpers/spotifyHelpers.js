@@ -4,7 +4,6 @@ const cookieParser = require('cookie-parser');
 const request = require('request');
 const querystring = require('querystring');
 
-
 const searchAuthOptions = {
   url: 'https://accounts.spotify.com/api/token',
   headers: {
@@ -98,5 +97,4 @@ exports.redirectAfterLogin = (req, res) => {
         }));
     }
   });
-
 };
