@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getAllSongs } from '../redux/reducer';
 import PlaylistEntry from './PlaylistEntry';
 import sampleData from '../lib/sampleData';
+import Player from './Player.js';
 
 class Playlist extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class Playlist extends React.Component {
   render() {
       return (
         <div>
+        <Player />
         {
           this.props.songs && this.props.songs.map((song) => {
             return (
