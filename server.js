@@ -26,24 +26,24 @@ const Song = require('./db/song');
 
 // *** Helper ***
 const spotifyHelpers = require('./helpers/spotifyHelpers.js');
-const sampleData = require('./src/lib/sampleData');
 
 // *** Routes ***
-
-app.get('/songs', function(req, res) {
-  res.send(sampleData);
-});
 
 // GET at /
 // render home page
 
-// GET at /songs
 // fetch top 10 songs from songs collection and send to client
+app.get('/songs', function(req, res) {
+  Song.find({}).sort({upVoteCount: 'descending'})
+  .then(function(songs) {
+    res.json(songs);
+  });
+});
 
 // GET at /songs/search
 app.get('/songs/search', (req, res) => {
   console.log(req.query.query);
-  spotifyHelpers.getTrackSearchResults(req.query.query) // get the query string from CLIENT
+  spotifyHelpers.getTrackSearchResults(req.query.query)
     .then((result) => {
         res.send(result);
       });
@@ -60,7 +60,6 @@ app.post('/songs', (req, res) => {
     netCount: 0
   }).save((err) => {
     if(err) res.json(err);
-    // res.status(200).send('some message');
     else res.status(201).send('Sucessfully inserted');
   })
 })
