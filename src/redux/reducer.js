@@ -1,9 +1,9 @@
 import axios from "axios";
-import sampleData from '../lib/sampleData';
 
 /////////////////CONSTANTS/////////////////////
 const GET_ALL_SONGS = "GET_ALL_SONGS";
 const INCREMENT = "INCREMENT";
+const SEARCH = "SEARCH";
 
 /////////////////ACTIONS//////////////
 const getSongs = (songs) => {
@@ -13,30 +13,41 @@ const getSongs = (songs) => {
   }
 };
 
-// const upVoteSong = (song) => {
-//   return {
-//     type: INCREMENT,
-//     song
-//   }
-// }
+const upVoteSong = (song) => {
+  return {
+    type: INCREMENT,
+    song
+  }
+}
+
+const onSearchSong = (results) => {
+  type: SEARCH,
+  results
+
+}
 
 /////////////////REDUCER/////////////////////
 //initiate your starting state
 let initial = {
-  songs: sampleData.tracks.items
+  songs: [],
+  results: []
 };
 
 const reducer = (state = initial, action) => {
 
   switch (action.type) {
-    case 'GET_ALL_SONGS':
-      return Object.assign({}, state, {songs: action.songs.objects});
-    // case INCREMENT:
-    //   return state.map(song =>
-    //     (todo.id === action.id) 
-    //       ? {...song, upVoteCount: upVoteCount++}
-    //       : todo
-    //   )
+    case GET_ALL_SONGS:
+      return Object.assign({}, state, {songs: action.songs});
+    case INCREMENT:
+      let newArr = state.songs.map((song) => {
+        if(song.name === action.song.name) {
+          song.upVoteCount++;
+        }
+        return song;
+      });
+      // return Object.assign({}, state, {songs: newArr});
+    case SEARCH:
+      return Object.assign({}, state, {results: action.results.objects});
     default:
       return state;
   }
@@ -59,5 +70,29 @@ export const getAllSongs = () => dispatch => {
 };
 
 export const onUpVote = (song) => dispatch => {
-  console.log('hello');
+  dispatch(upVoteSong(song));
+  // axios.put('')
+  //   .then((response) => {
+  //     return response.data;
+  //   })
+  //   .then((response) => {
+  //     console.log(response)
+  //   })
+  //   .catch((err) => {
+  //     console.error.bind(err);
+  //   })
+}
+
+export const onSearch = () => dispatch => {
+  axios.get('localhost:3000/songs/search')
+    .then((response) => {
+      console.log(response.data);
+      return response.data;
+    })
+    .then((results) => {
+      dispatch(onSearchSong(results));
+    })
+    .catch((err) => {
+      console.error.bind(err);
+    })
 }
