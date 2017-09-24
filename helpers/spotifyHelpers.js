@@ -53,6 +53,7 @@ exports.handleHostLogin = (req, res) => {
 
   res.cookie('spotify_auth_state', state);
 
+
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
