@@ -89,7 +89,7 @@ exports.redirectAfterLogin = (req, res) => {
     };
   }
 
-  request.post(playerauthOptions, function(error, response, body) {
+  request.post(playerAuthOptions, function(error, response, body) {
     console.log('issuing POST')
     if (!error && response.statusCode === 200) {
 
