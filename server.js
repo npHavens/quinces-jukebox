@@ -39,7 +39,7 @@ app.use(cookieParser());
 
 // fetch top 10 songs by netVoteCount from songs collection and send to client
 app.get('/songs', function(req, res) {
-  Song.find({}).sort({netVoteCount: 'descending'}).limit(2)
+  Song.find({}).sort({netVoteCount: 'descending'}).limit(10)
   .then(function(songs) {
     res.json(songs);
   });
