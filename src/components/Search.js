@@ -43,17 +43,18 @@ class Search extends React.Component{
     console.log(song);
     let newSong = {};
     newSong.name = song.name;
-    newSong.upVoteCount = 1;
-    newSong.downVoteCount = 0;
-    newSong.netCount = 1;
-    newSong.image = song.album.images[0];
+    // newSong.upVoteCount = 1;
+    // newSong.downVoteCount = 0;
+    // newSong.netCount = 1;
+    newSong.image = song.album.images[2].url;
+    newSong.link = song.album.external_urls.spotify;
     axios.post('/songs', newSong)
     .then((response) => {
       console.log(response)
     })
     .catch((err) => {
       console.log(error);
-    })
+    });
   }
 
   render() {
