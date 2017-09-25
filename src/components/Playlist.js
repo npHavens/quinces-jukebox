@@ -11,7 +11,8 @@ class Playlist extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      songs: []
+      songs: [],
+      hostSession: false
     }
     this.getAllSongs = this.getAllSongs.bind(this);
     this.upVote = this.upVote.bind(this);
@@ -25,6 +26,7 @@ class Playlist extends React.Component {
     .then((response) => {
       console.log(response);
       this.setState({ songs: response.data})
+      this.checkUser();
     })
     .catch((err) => {
       console.error.bind(err);
@@ -44,10 +46,20 @@ class Playlist extends React.Component {
     })
   }
 
+  checkUser() { //check if host is logged in
+    const url = window.location.href;
+    if (url.indexOf('#access_token') > -1) {
+      this.setState({hostSession: true});
+    }
+  }
+
   render() {
       return (
         <div>
-        {this.state.songs.length > 1 ? <Player songs={this.state.songs}/> : <div>LOADING SONGS</div>}
+        {//only render player if host is logged in
+          this.state.hostSession && this.state.songs.length > 1
+          ? <Player songs={this.state.songs}/>
+          : <div></div>}
         {
           this.state.songs && this.state.songs.map((song) => {
             return (
