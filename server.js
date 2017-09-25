@@ -1,6 +1,7 @@
 // *** Express ***
 const express = require('express');
 const app = express();
+const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 
 // *** Webpack ***
@@ -8,7 +9,6 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config.js');
 const compiler = webpack(webpackConfig);
-
 app.use(webpackDevMiddleware(compiler, {
   hot: true,
   filename: 'bundle.js',
@@ -21,7 +21,6 @@ app.use(webpackDevMiddleware(compiler, {
 
 // *** Static Assets ***
 app.use(express.static(__dirname + '/www'));
-app.use(cookieParser);
 
 // *** Database ***
 const User = require('./db/user');
@@ -29,6 +28,7 @@ const Song = require('./db/song');
 
 // *** Helper ***
 const spotifyHelpers = require('./helpers/spotifyHelpers.js');
+app.use(cookieParser());
 
 // *** Routes ***
 
@@ -68,16 +68,14 @@ app.post('/songs', (req, res) => {
 })
 
 app.get('/hostLogin', (req, res) => {
-  console.log('logging in host')
-  //res.send('logging in host')
-  res.send('logging in host')
-  //spotifyHelpers.handleHostLogin(req, res);
-});
+  console.log('logging in host');
+  spotifyHelpers.handleHostLogin(req, res);
+})
 
 app.get('/callback', (req, res) => {
-  spotifyHelpers.handleRedirectAfterLogin(req, res);
-});
-
+  console.log('redirecting');
+  spotifyHelpers.redirectAfterLogin(req, res);
+})
 // POST at /songs
 // add song to both users collection and songs collection
 

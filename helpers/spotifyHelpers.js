@@ -90,6 +90,7 @@ exports.redirectAfterLogin = (req, res) => {
   }
 
   request.post(playerauthOptions, function(error, response, body) {
+    console.log('issuing POST')
     if (!error && response.statusCode === 200) {
 
       const access_token = body.access_token;
