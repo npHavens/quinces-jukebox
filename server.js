@@ -68,15 +68,13 @@ app.post('/songs', (req, res) => {
   })
 })
 
-app.get('/hostLogin', (req, res) => {
-  console.log('logging in host');
-  spotifyHelpers.handleHostLogin(req, res);
-})
 
-app.get('/callback', (req, res) => {
-  console.log('redirecting');
-  spotifyHelpers.redirectAfterLogin(req, res);
-})
+
+
+// update vote on both songs collection and users collection
+app.post('/songs/votes', function(req, res) {
+  // need to get from client: song name, user name, upvote or downvote
+});
 
 // POST at /songs
 // add song to both users collection and songs collection
@@ -130,8 +128,19 @@ app.get('/callback', (req, res) => {
 app.get('/*', function(req, res) {
   res.status(404).send('Not Found');
 });
+//// *** Host Authentication Routes ***
 
+app.get('/hostLogin', (req, res) => {
+  console.log('logging in host');
+  spotifyHelpers.handleHostLogin(req, res);
+})
+
+app.get('/callback', (req, res) => {
+  console.log('redirecting');
+  spotifyHelpers.redirectAfterLogin(req, res);
+})
 // *** Server ***
 const server = app.listen(3000, function() {
   console.log('Listening at http://localhost:3000');
 });
+
