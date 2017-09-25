@@ -21,20 +21,18 @@ class Player extends React.Component {
   //synchronous function that gets token values from url parameters
   getSpotifyToken() {
     const getHashParams = () => {
-      let hashParams = {};
-      let e, r = /([^&;=]+)=?([^&;]*)/g,
-          q = window.location.hash.substring(1);
-      while ( e = r.exec(q)) {
-         hashParams[e[1]] = decodeURIComponent(e[2]);
-      }
+    let hashParams = {};
+    let e, r = /([^&;=]+)=?([^&;]*)/g;
+    let q = window.location.hash.substring(1);
+    while ( e = r.exec(q)) {
+      hashParams[e[1]] = decodeURIComponent(e[2]);
+    }
       return hashParams;
     }
 
     const params = getHashParams();
-
-    const access_token = params.access_token,
-      refresh_token = params.refresh_token,
-      error = params.error;
+    const access_token = params.access_token;
+    const refresh_token = params.refresh_token;
 
     spotifyApi.setAccessToken(access_token);
     return access_token;
@@ -49,7 +47,6 @@ class Player extends React.Component {
       });
   }
 
-  //
   playCurrentSong(deviceId) {
     spotifyApi.play({
       device_id: deviceId,
