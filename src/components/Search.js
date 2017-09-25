@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import SearchEntry from './SearchEntry';
+import { Route } from 'react-router-dom';
 
 import onSearch from '../redux/reducer';
 
@@ -20,14 +21,13 @@ class Search extends React.Component{
   }
 
   onSearch(query){
-
     axios.get('/songs/search', {
       params: {
         query: this.state.query
       }
     })
     .then((response) => {
-      this.setState({ results: response.data.tracks.items})
+      this.setState({ results: response.data.tracks.items});
     })
     .catch((err) => {
       console.error.bind(err);
@@ -40,20 +40,20 @@ class Search extends React.Component{
   }
 
   onAdd(song) {
-    console.log(song);
     let newSong = {};
     newSong.name = song.name;
-    // newSong.upVoteCount = 1;
-    // newSong.downVoteCount = 0;
-    // newSong.netCount = 1;
+    newSong.upVoteCount = 1;
+    newSong.downVoteCount = 0;
+    newSong.netCount = 1;
     newSong.image = song.album.images[2].url;
     newSong.link = song.album.external_urls.spotify;
     axios.post('/songs', newSong)
     .then((response) => {
-      console.log(response)
+      history.push('/')
+      console.log(response);
     })
     .catch((err) => {
-      console.log(error);
+      console.log(err);
     });
   }
 
