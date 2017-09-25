@@ -69,8 +69,6 @@ app.post('/songs', (req, res) => {
 })
 
 
-
-
 // update vote on both songs collection and users collection
 app.post('/songs/votes', function(req, res) {
   // need to get from client: song name, user name, upvote or downvote
@@ -121,17 +119,12 @@ app.post('/signup', function(req, res) {
 // direct to home page
 
 
-
-//// *** Host Authentication Routes ***
-
-
+// *** Host Authentication Routes ***
 app.get('/hostLogin', (req, res) => {
-  console.log('logging in host');
   spotifyHelpers.handleHostLogin(req, res);
 })
-
+//redirect from Spotify Authoriztion site
 app.get('/callback', (req, res) => {
-  console.log('redirecting');
   spotifyHelpers.redirectAfterLogin(req, res);
 })
 

@@ -15,16 +15,7 @@ const searchAuthOptions = {
   json: true
 };
 
-const generateRandomString = (length) => {
-  let text = '';
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (let i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-};
-
+//get search results using client-credentials Oauth flow
 exports.getTrackSearchResults = (queryString) => {
   return new Promise((resolve, reject) => {
     request.post(searchAuthOptions, (error, response, body) => {
@@ -46,12 +37,23 @@ exports.getTrackSearchResults = (queryString) => {
   });
 };
 
+const generateRandomString = (length) => {
+  let text = '';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (let i = 0; i < length; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+};
+
+
+//redirect host user to Spotify login page to obtain authorization code
 exports.handleHostLogin = (req, res) => {
   const state = generateRandomString(16);
   const scope = 'user-read-private user-read-email user-read-playback-state user-modify-playback-state';
 
   res.cookie('spotify_auth_state', state);
-
 
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
@@ -63,6 +65,7 @@ exports.handleHostLogin = (req, res) => {
     }));
 };
 
+//handle the redirect from Spotify after login and save the authorization code
 exports.redirectAfterLogin = (req, res) => {
   const code = req.query.code || null;
   const playerAuthOptions = {
@@ -78,13 +81,14 @@ exports.redirectAfterLogin = (req, res) => {
     json: true
   };
 
+  //make a new request to spotify API and provide the authorization code in exchange for a token
   request.post(playerAuthOptions, function(error, response, body) {
-    console.log('issuing POST')
     if (!error && response.statusCode === 200) {
 
       const access_token = body.access_token;
       const refresh_token = body.refresh_token;
 
+      //redirect host user back to playlist page and pass token to browser
       res.redirect('http://localhost:3000/#' +
         querystring.stringify({
           access_token: access_token,
