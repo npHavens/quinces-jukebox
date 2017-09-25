@@ -115,24 +115,6 @@ app.get('/*', function(req, res) {
   res.status(404).send('Not Found');
 });
 
-
-// send 404 to client
-app.get('/*', function(req, res) {
-  res.status(404).send('Not Found');
-});
-
-
-// send 404 to client
-app.get('/*', function(req, res) {
-  res.status(404).send('Not Found');
-});
-
-
-// send 404 to client
-app.get('/*', function(req, res) {
-  res.status(404).send('Not Found');
-});
-
 // *** Server ***
 const server = app.listen(3000, function() {
   console.log('Listening at http://localhost:3000');
