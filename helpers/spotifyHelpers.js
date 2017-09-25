@@ -49,7 +49,7 @@ exports.getTrackSearchResults = (queryString) => {
 
 exports.handleHostLogin = (req, res) => {
   const state = generateRandomString(16);
-  const scope = 'user-read-private user-read-email user-read-playback-state';
+  const scope = 'user-read-private user-read-email user-read-playback-state user-modify-playback-state';
 
   res.cookie('spotify_auth_state', state);
 
@@ -65,29 +65,18 @@ exports.handleHostLogin = (req, res) => {
 
 exports.redirectAfterLogin = (req, res) => {
   const code = req.query.code || null;
-  const state = req.query.state || null;
-  const storedState = req.cookies ? req.cookies['spotify_auth_state'] : null;
-
-  if (state === null || state !== storedState) {
-    res.redirect('/#' +
-      querystring.stringify({
-        error: 'state_mismatch'
-      }));
-  } else {
-    res.clearCookie('spotify_auth_state');
-    const playerAuthOptions = {
-      url: 'https://accounts.spotify.com/api/token',
-      form: {
-        code: code,
-        redirect_uri: 'http://localhost:3000/callback',
-        grant_type: 'authorization_code'
-      },
-      headers: {
-        'Authorization': 'Basic ' + (new Buffer(credentials.client_id + ':' + credentials.client_secret).toString('base64'))
-      },
-      json: true
-    };
-  }
+  const playerAuthOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    form: {
+      code: code,
+      redirect_uri: 'http://localhost:3000/callback',
+      grant_type: 'authorization_code'
+    },
+    headers: {
+      'Authorization': 'Basic ' + (new Buffer(credentials.client_id + ':' + credentials.client_secret).toString('base64'))
+    },
+    json: true
+  };
 
   request.post(playerAuthOptions, function(error, response, body) {
     console.log('issuing POST')
@@ -96,11 +85,7 @@ exports.redirectAfterLogin = (req, res) => {
       const access_token = body.access_token;
       const refresh_token = body.refresh_token;
 
-      const options = {
-        url: "https://api.spotify.com/v1/me/player/devices",
-        headers: { 'Authorization': 'Bearer ' + access_token },
-        json: true
-      };
+
 
       // use the access token to access the Spotify Web API
       //console.log(refresh_token)
