@@ -120,7 +120,17 @@ app.get('/*', function(req, res) {
 app.get('/*', function(req, res) {
   res.status(404).send('Not Found');
 });
+//// *** Host Authentication Routes ***
 
+app.get('/hostLogin', (req, res) => {
+  console.log('logging in host');
+  spotifyHelpers.handleHostLogin(req, res);
+})
+
+app.get('/callback', (req, res) => {
+  console.log('redirecting');
+  spotifyHelpers.redirectAfterLogin(req, res);
+})
 // *** Server ***
 const server = app.listen(3000, function() {
   console.log('Listening at http://localhost:3000');
