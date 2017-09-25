@@ -15,7 +15,6 @@ const searchAuthOptions = {
   json: true
 };
 
-//get search results using client-credentials Oauth flow
 exports.getTrackSearchResults = (queryString) => {
   return new Promise((resolve, reject) => {
     request.post(searchAuthOptions, (error, response, body) => {
@@ -47,7 +46,6 @@ const generateRandomString = (length) => {
   return text;
 };
 
-
 //redirect host user to Spotify login page to obtain authorization code
 exports.handleHostLogin = (req, res) => {
   const state = generateRandomString(16);
@@ -64,6 +62,7 @@ exports.handleHostLogin = (req, res) => {
       state: state
     }));
 };
+
 
 //handle the redirect from Spotify after login and save the authorization code
 exports.redirectAfterLogin = (req, res) => {
@@ -82,11 +81,13 @@ exports.redirectAfterLogin = (req, res) => {
   };
 
   //make a new request to spotify API and provide the authorization code in exchange for a token
+
   request.post(playerAuthOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
 
       const access_token = body.access_token;
       const refresh_token = body.refresh_token;
+
 
       //redirect host user back to playlist page and pass token to browser
       res.redirect('http://localhost:3000/#' +

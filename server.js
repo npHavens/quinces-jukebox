@@ -119,21 +119,17 @@ app.post('/signup', function(req, res) {
 // direct to home page
 
 
-// *** Host Authentication Routes ***
+//// *** Host Authentication Routes ***
+
 app.get('/hostLogin', (req, res) => {
+  console.log('logging in host');
   spotifyHelpers.handleHostLogin(req, res);
 })
-//redirect from Spotify Authoriztion site
+
 app.get('/callback', (req, res) => {
+  console.log('redirecting');
   spotifyHelpers.redirectAfterLogin(req, res);
 })
-
-
-// send 404 to client
-app.get('/*', function(req, res) {
-  res.status(404).send('Not Found');
-});
-
 
 // send 404 to client
 app.get('/*', function(req, res) {
