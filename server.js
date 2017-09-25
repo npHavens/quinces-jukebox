@@ -42,7 +42,7 @@ app.use(cookieParser());
 
 // fetch top 10 songs by netVoteCount from songs collection and send to client
 app.get('/songs', function(req, res) {
-  Song.find({}).sort({netVoteCount: 'descending'}).limit(10)
+  Song.find({}).sort({netVoteCount: 'descending'}).limit(2)
   .then(function(songs) {
     res.json(songs);
   });
@@ -100,10 +100,7 @@ app.post('/signup', function(req, res) {
 // GET at /logout
 // direct to home page
 
-// send 404 to client
-app.get('/*', function(req, res) {
-  res.status(404).send('Not Found');
-});
+
 //// *** Host Authentication Routes ***
 
 app.get('/hostLogin', (req, res) => {
@@ -115,6 +112,12 @@ app.get('/callback', (req, res) => {
   console.log('redirecting');
   spotifyHelpers.redirectAfterLogin(req, res);
 })
+
+// send 404 to client
+app.get('/*', function(req, res) {
+  res.status(404).send('Not Found');
+});
+
 // *** Server ***
 const server = app.listen(3000, function() {
   console.log('Listening at http://localhost:3000');
