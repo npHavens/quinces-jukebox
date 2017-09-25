@@ -34,9 +34,6 @@ const spotifyHelpers = require('./helpers/spotifyHelpers.js');
 
 // *** Routes ***
 
-// GET at /
-// render home page
-
 // fetch top 10 songs by netVoteCount from songs collection and send to client
 app.get('/songs', function(req, res) {
   Song.find({}).sort({netVoteCount: 'descending'}).limit(10)
@@ -45,34 +42,33 @@ app.get('/songs', function(req, res) {
   });
 });
 
-// GET at /songs/search
+// fetch song research results and send to client
 app.get('/songs/search', (req, res) => {
-  console.log(req.query.query);
   spotifyHelpers.getTrackSearchResults(req.query.query)
-    .then((result) => {
-        res.send(result);
-      });
+  .then((results) => {
+      res.json(results);
+    });
 });
 
-// POST at /songs
 // add song to both users collection and songs collection
 app.post('/songs', (req, res) => {
-  new Song({
-    name: "Sound of Silence",
-    userID: 1,
-    image: "https://i.scdn.co/image/cc3bbe5a796b2b23384862d046f55e7118380db9",
-    upVoteCount: 0,
-    downVoteCount: 0,
-    netCount: 0
-  }).save((err) => {
-    if(err) res.json(err);
-    else res.status(201).send('Sucessfully inserted');
-  })
-})
+  var newSong = new Song(req.body);
+  newSong.save()
+  .then((newSong) => {
+    res.status(201).send(newSong);
+  });
+});
 
 // update vote on both songs collection and users collection
-app.post('/songs/votes', function(req, res) {
-  // need to get from client: song name, user name, upvote or downvote
+app.put('/song', function(req, res) {
+  Song.findOne({name: req.body.name})
+  .then(function(song) {
+    if (song) {
+      song.upVoteCount++;
+      song.save();
+      res.sendStatus(201);
+    }
+  });
 });
 
 // POST at /login
