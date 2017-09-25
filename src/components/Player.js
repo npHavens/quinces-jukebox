@@ -8,7 +8,8 @@ class Player extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentSongId: this.props.songs[0].link.split('track/')[1]
+      currentSongId: this.props.songs[0].link.split('track/')[1],
+      songs: this.props.songs
     }
   }
 
@@ -50,11 +51,27 @@ class Player extends React.Component {
   playCurrentSong(deviceId) {
     spotifyApi.play({
       device_id: deviceId,
-      uris: this.props.songs.map(song => {
-         return 'spotify:track:' + song.link.split('track/')[1];
+      uris: this.state.songs.map(song => {
+          const songId = song.link.split('track/')[1]
+          return 'spotify:track:' + songId;
         })
     })
+    .then(() => {
+      this.setState({
+        currentSongId: this.state.songs[0].split('track:')[0],
+        songs: this.state.songs.slice(1)
+      })
+    });
   };
+
+  getCurrentSongTime(cb) {
+    spotifyApi.getMyCurrentPlayingTrack()
+    .then(song => {
+      let timeLeft = song.item.duration_ms - song.progress_ms;
+      console.log(timeLeft)
+
+    })
+  }
 
   render() {
     return (
