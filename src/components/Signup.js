@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { auth } from '../../helpers/auth';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -22,11 +23,15 @@ class Signup extends React.Component {
     this.setState(newState);
   }
 
-  signUp() {
+  signUp(e) {
+    auth(this.state.email, this.state.password)
+      .catch(e => {
+        console.log(e);
+        return;
+      })
     let newUser = {};
     newUser.username = this.state.username;
     newUser.password = this.state.password;
-    
     axios.post('/signup', newUser)
     .then((response) => {
       this.props.history.push('/')
