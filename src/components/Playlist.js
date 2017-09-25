@@ -72,7 +72,7 @@ class Playlist extends React.Component {
         {
           this.state.songs && this.state.songs.map((song) => {
             return (
-              
+
               <PlaylistEntry downVote={this.downVote} upVote={this.upVote} Song={song} />
             )
           })
