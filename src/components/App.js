@@ -15,6 +15,10 @@ class App extends React.Component {
     };
   }
 
+  signUp(username, password) {
+    console.log(username, password);
+  }
+
   render() {
     return (
       <div>

@@ -8,11 +8,12 @@ const PlaylistEntry = (props) => {
   }
 
   const handleDownVote = () => {
-
+    props.downVote(props.Song);
   }
   return (
     <div className="row">
       <button onClick={handleUpVote}>+</button>
+      <button onClick={handleDownVote}>-</button>
       <h2>{props.Song.name}</h2>
       <p>{props.Song.upVoteCount}</p>
       <p>{props.Song.downVoteCount}</p>

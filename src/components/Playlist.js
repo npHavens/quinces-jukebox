@@ -15,6 +15,7 @@ class Playlist extends React.Component {
     }
     this.getAllSongs = this.getAllSongs.bind(this);
     this.upVote = this.upVote.bind(this);
+    this.downVote = this.downVote.bind(this);
   }
   componentDidMount() {
     this.getAllSongs();
@@ -44,6 +45,19 @@ class Playlist extends React.Component {
     })
   }
 
+  downVote(song) {
+    // need to check if song as already been voted
+    // on by person
+    song.upVoteCount--;
+    axios.put('/song', song)
+    .then((response) => {
+      this.getAllSongs();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
   render() {
       return (
         <div>
@@ -51,7 +65,7 @@ class Playlist extends React.Component {
         {
           this.state.songs && this.state.songs.map((song) => {
             return (
-              <PlaylistEntry upVote={this.upVote} Song={song} />
+              <PlaylistEntry downVote={this.downVote} upVote={this.upVote} Song={song} />
             )
           })
         }
