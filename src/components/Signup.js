@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const Signup = () => (
   <div>
-    <TextField hintText="Email Address"/>
+    <TextField hintText="Username"/>
     <br />
     <br />
     <TextField hintText="Password"/>

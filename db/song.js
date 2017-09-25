@@ -4,13 +4,18 @@ const User = require('./user');
 const Schema = mongoose.Schema;
 
 const SongSchema = new Schema({
-    name: {type: String, index: {unique: true}},
-    userID: Number,
-    image: String,
-    link: String,
-    upVoteCount: {type: Number, default: 0},
-    downVoteCount: {type: Number, default: 0},
-    netVoteCount: Number
+  name: {type: String, index: {unique: true}},
+  userID: Number,
+  image: String,
+  link: String,
+  upVoteCount: {type: Number, default: 0},
+  downVoteCount: {type: Number, default: 0},
+  netVoteCount: Number
+});
+
+SongSchema.pre('save', function(next) {
+  this.netVoteCount = this.upVoteCount - this.downVoteCount;
+  next();
 });
 
 const Song = mongoose.model('song', SongSchema);
