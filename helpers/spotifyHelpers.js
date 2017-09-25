@@ -85,12 +85,6 @@ exports.redirectAfterLogin = (req, res) => {
       const access_token = body.access_token;
       const refresh_token = body.refresh_token;
 
-
-
-      // use the access token to access the Spotify Web API
-      //console.log(refresh_token)
-
-      // we can also pass the token to the browser to make requests from there
       res.redirect('http://localhost:3000/#' +
         querystring.stringify({
           access_token: access_token,
