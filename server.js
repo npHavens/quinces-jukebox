@@ -71,8 +71,15 @@ app.post('/songs', (req, res) => {
 })
 
 // update vote on both songs collection and users collection
-app.post('/songs/votes', function(req, res) {
-  // need to get from client: song name, user name, upvote or downvote
+app.put('/song', function(req, res) {
+  Song.findOne({name: req.body.name})
+  .then(function(song) {
+    if (song) {
+      song.upVoteCount++;
+      song.save();
+      res.sendStatus(201);
+    }
+  });
 });
 
 // POST at /login
