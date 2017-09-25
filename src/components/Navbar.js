@@ -1,9 +1,14 @@
 import React from 'react';
+import AppBar from 'material-ui/AppBar';
 
 import { Link } from 'react-router-dom';
 
 const Navbar = () => (
   <div>
+    <AppBar
+      title="Quinces JukeBox"
+      iconClassNameRight="muidocs-icon-navigation-expand-more"
+    />
     <ul>
       <li><Link to="/">Playlist</Link></li>
       <li><Link to="/signup">Sign Up</Link></li>
