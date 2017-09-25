@@ -68,7 +68,6 @@ app.post('/songs', (req, res) => {
   })
 })
 
-
 // update vote on both songs collection and users collection
 app.post('/songs/votes', function(req, res) {
   // need to get from client: song name, user name, upvote or downvote
@@ -100,7 +99,7 @@ app.put('/song', function(req, res) {
 // POST at /songs
 // add song to both users collection and songs collection
 
-// POST at /songs/votes
+// POST at /songs/votesg
 
 
 // POST at /login
