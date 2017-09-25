@@ -1,6 +1,8 @@
 // *** Express ***
 const express = require('express');
 const app = express();
+const querystring = require('querystring');
+const cookieParser = require('cookie-parser');
 
 // *** Webpack ***
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -31,6 +33,7 @@ app.use(bodyParser.json());
 
 // *** Helper ***
 const spotifyHelpers = require('./helpers/spotifyHelpers.js');
+app.use(cookieParser());
 
 // *** Routes ***
 
@@ -74,6 +77,21 @@ app.post('/songs', (req, res) => {
 app.post('/songs/votes', function(req, res) {
   // need to get from client: song name, user name, upvote or downvote
 });
+
+app.get('/hostLogin', (req, res) => {
+  console.log('logging in host');
+  spotifyHelpers.handleHostLogin(req, res);
+})
+
+app.get('/callback', (req, res) => {
+  console.log('redirecting');
+  spotifyHelpers.redirectAfterLogin(req, res);
+})
+// POST at /songs
+// add song to both users collection and songs collection
+
+// POST at /songs/votes
+
 
 // POST at /login
 // direct to song playlist page
