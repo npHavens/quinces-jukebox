@@ -47,7 +47,7 @@ class Playlist extends React.Component {
   render() {
       return (
         <div>
-        <Player />
+        {this.state.songs.length > 1 ? <Player songs={this.state.songs}/> : <div>LOADING SONGS</div>}
         {
           this.state.songs && this.state.songs.map((song) => {
             return (
