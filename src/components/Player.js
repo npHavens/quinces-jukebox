@@ -8,7 +8,6 @@ class Player extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      deviceId: '',
       currentSongId: '54X78diSLoUDI3joC2bjMz'
     }
   }
@@ -44,8 +43,6 @@ class Player extends React.Component {
   getDeviceId() {
     spotifyApi.getMyDevices()
       .then(function(data) {
-        this.setState({device_id: data.devices[0].id});
-        //console.log(data.devices[0].id)
         this.playCurrentSong(data.devices[0].id);
       }.bind(this), function(err) {
         console.error(err);
