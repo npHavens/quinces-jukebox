@@ -1,5 +1,7 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
 
 import { Link } from 'react-router-dom';
 
@@ -7,7 +9,8 @@ const Navbar = () => (
   <div>
     <AppBar
       title="Quinces JukeBox"
-      iconClassNameRight="muidocs-icon-navigation-expand-more"
+
+      iconElementLeft={<IconButton><NavigationMenu /></IconButton>}
     />
     <ul>
       <li><Link to="/">Playlist</Link></li>

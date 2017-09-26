@@ -4,7 +4,6 @@ import axios from 'axios';
 // import { getAllSongs } from '../redux/reducer';
 import PlaylistEntry from './PlaylistEntry';
 import {GridList, GridTile} from 'material-ui/GridList';
-
 import Player from './Player.js';
 
 
@@ -26,16 +25,10 @@ class Playlist extends React.Component {
   getAllSongs() {
     axios.get(`/songs`)
     .then((response) => {
-      // Remove before commiting
       this.setState({
-        songs: response.data.tracks.items,
-        currentSong: response.data.tracks.items[0]
-      });
-      // Uncomment before commiting
-      // this.setState({
-      //   songs: response.data,
-      //   currentSong: response.data[0]
-      // })
+        songs: response.data,
+        currentSong: response.data[0]
+      })
     })
     .catch((err) => {
       console.error.bind(err);
@@ -71,6 +64,7 @@ class Playlist extends React.Component {
   render() {
       return (
         <div>
+          <Player song={this.state.currentSong}/>
         <GridList
         cellHeight={180}
         cols={1}
