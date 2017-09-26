@@ -8,12 +8,12 @@ class Player extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentSongId: '54X78diSLoUDI3joC2bjMz'
+      currentSongId: this.props.song.link.split('track/')[1]
     }
   }
 
   componentDidMount() {
-    //console.log(this.props.songs)
+    console.log(this.state.currentSongId)
     this.getSpotifyToken();
     this.getDeviceId();
   }
@@ -35,7 +35,6 @@ class Player extends React.Component {
       refresh_token = params.refresh_token,
       error = params.error;
 
-    //console.log(access_token);
     spotifyApi.setAccessToken(access_token);
     return access_token;
   }
@@ -52,7 +51,6 @@ class Player extends React.Component {
   playCurrentSong(deviceId) {
     spotifyApi.play({device_id: deviceId, uris: ['spotify:track:' + this.state.currentSongId]})
       .then(function(data) {
-        console.log('playing on device', deviceId)
        }.bind(this), function(err) {
          console.error(err);
     });
@@ -61,7 +59,7 @@ class Player extends React.Component {
   render() {
     return (
       <div>
-      <img src="https://i.scdn.co/image/b06f26ee223372607bf0be8188cf94ffe0704bd6" height="150" width="150"/>
+      <iframe src={'https://open.spotify.com/embed?uri=spotify:track:' + this.state.currentSongId} width="300" height="380" frameBorder="0" allowTransparency="true"></iframe>
       </div>
     )
   }
