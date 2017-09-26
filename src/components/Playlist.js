@@ -64,7 +64,7 @@ class Playlist extends React.Component {
   render() {
       return (
         <div>
-          <Player song={this.state.currentSong}/>
+          {this.state.currentSong && <Player song={this.state.currentSong}/>}
         <GridList
         cellHeight={180}
         cols={1}
