@@ -8,46 +8,40 @@ class Player extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      deviceId: '',
-      currentSongId: '54X78diSLoUDI3joC2bjMz'
+      currentSongId: this.props.song.link.split('track/')[1]
     }
   }
 
   componentDidMount() {
-    //console.log(this.props.songs)
     this.getSpotifyToken();
-    this.getDeviceId();
+    this.getDeviceId(this.playCurrentSong.bind(this));
   }
 
+  //synchronous function that gets token values from url parameters
   getSpotifyToken() {
-    function getHashParams() {
-      var hashParams = {};
-      var e, r = /([^&;=]+)=?([^&;]*)/g,
-          q = window.location.hash.substring(1);
-      while ( e = r.exec(q)) {
-         hashParams[e[1]] = decodeURIComponent(e[2]);
-      }
+    const getHashParams = () => {
+    let hashParams = {};
+    let e, r = /([^&;=]+)=?([^&;]*)/g;
+    let q = window.location.hash.substring(1);
+    while ( e = r.exec(q)) {
+      hashParams[e[1]] = decodeURIComponent(e[2]);
+    }
       return hashParams;
     }
 
-    var params = getHashParams();
+    const params = getHashParams();
+    const access_token = params.access_token;
+    const refresh_token = params.refresh_token;
 
-    var access_token = params.access_token,
-      refresh_token = params.refresh_token,
-      error = params.error;
-
-    //console.log(access_token);
     spotifyApi.setAccessToken(access_token);
     return access_token;
   }
 
-  getDeviceId() {
+  getDeviceId(cb) {
     spotifyApi.getMyDevices()
-      .then(function(data) {
-        this.setState({device_id: data.devices[0].id});
-        //console.log(data.devices[0].id)
-        this.playCurrentSong(data.devices[0].id);
-      }.bind(this), function(err) {
+      .then((data) => {
+        cb(data.devices[0].id);
+      }, (err) =>{
         console.error(err);
       });
   }
@@ -55,16 +49,23 @@ class Player extends React.Component {
   playCurrentSong(deviceId) {
     spotifyApi.play({device_id: deviceId, uris: ['spotify:track:' + this.state.currentSongId]})
       .then(function(data) {
-        console.log('playing on device', deviceId)
        }.bind(this), function(err) {
          console.error(err);
     });
+  };
+
+  getCurrentSongTime(cb) {
+    spotifyApi.getMyCurrentPlayingTrack()
+    .then(song => {
+      let timeLeft = song.item.duration_ms - song.progress_ms;
+      console.log(timeLeft)
+    })
   }
 
   render() {
     return (
       <div>
-      <img src="https://i.scdn.co/image/b06f26ee223372607bf0be8188cf94ffe0704bd6" height="150" width="150"/>
+      <iframe src={'https://open.spotify.com/embed?uri=spotify:track:' + this.state.currentSongId} width="300" height="380" frameBorder="0" allowTransparency="true"></iframe>
       </div>
     )
   }

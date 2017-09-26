@@ -61,10 +61,11 @@ class Playlist extends React.Component {
     })
   }
 
+
   render() {
       return (
         <div>
-          <Player song={this.state.currentSong}/>
+          {this.state.currentSong && <Player song={this.state.currentSong}/>}
         <GridList
         cellHeight={180}
         cols={1}
@@ -72,7 +73,7 @@ class Playlist extends React.Component {
         {
           this.state.songs && this.state.songs.map((song) => {
             return (
-              
+
               <PlaylistEntry downVote={this.downVote} upVote={this.upVote} Song={song} />
             )
           })
