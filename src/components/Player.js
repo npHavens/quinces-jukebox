@@ -13,37 +13,35 @@ class Player extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.state.currentSongId)
     this.getSpotifyToken();
-    this.getDeviceId();
+    this.getDeviceId(this.playCurrentSong.bind(this));
   }
 
+  //synchronous function that gets token values from url parameters
   getSpotifyToken() {
-    function getHashParams() {
-      var hashParams = {};
-      var e, r = /([^&;=]+)=?([^&;]*)/g,
-          q = window.location.hash.substring(1);
-      while ( e = r.exec(q)) {
-         hashParams[e[1]] = decodeURIComponent(e[2]);
-      }
+    const getHashParams = () => {
+    let hashParams = {};
+    let e, r = /([^&;=]+)=?([^&;]*)/g;
+    let q = window.location.hash.substring(1);
+    while ( e = r.exec(q)) {
+      hashParams[e[1]] = decodeURIComponent(e[2]);
+    }
       return hashParams;
     }
 
-    var params = getHashParams();
-
-    var access_token = params.access_token,
-      refresh_token = params.refresh_token,
-      error = params.error;
+    const params = getHashParams();
+    const access_token = params.access_token;
+    const refresh_token = params.refresh_token;
 
     spotifyApi.setAccessToken(access_token);
     return access_token;
   }
 
-  getDeviceId() {
+  getDeviceId(cb) {
     spotifyApi.getMyDevices()
-      .then(function(data) {
-        this.playCurrentSong(data.devices[0].id);
-      }.bind(this), function(err) {
+      .then((data) => {
+        cb(data.devices[0].id);
+      }, (err) =>{
         console.error(err);
       });
   }
@@ -54,6 +52,15 @@ class Player extends React.Component {
        }.bind(this), function(err) {
          console.error(err);
     });
+  };
+
+  getCurrentSongTime(cb) {
+    spotifyApi.getMyCurrentPlayingTrack()
+    .then(song => {
+      let timeLeft = song.item.duration_ms - song.progress_ms;
+      console.log(timeLeft)
+
+    })
   }
 
   render() {
