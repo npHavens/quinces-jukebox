@@ -59,7 +59,6 @@ class Player extends React.Component {
     .then(song => {
       let timeLeft = song.item.duration_ms - song.progress_ms;
       console.log(timeLeft)
-
     })
   }
 

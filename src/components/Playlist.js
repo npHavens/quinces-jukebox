@@ -61,12 +61,6 @@ class Playlist extends React.Component {
     })
   }
 
-  checkUser() { //check if host is logged in
-    const url = window.location.href;
-    if (url.indexOf('#access_token') > -1) {
-      this.setState({hostSession: true});
-    }
-  }
 
   render() {
       return (
@@ -76,7 +70,6 @@ class Playlist extends React.Component {
         cellHeight={180}
         cols={1}
         >
-
         {
           this.state.songs && this.state.songs.map((song) => {
             return (
