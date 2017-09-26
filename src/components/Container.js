@@ -8,8 +8,12 @@ import Login from './Login';
 import Search from './Search';
 
 
-const Container = () => (
-    <main>
+class Container extends React.Component {
+
+
+  render() {
+    return (
+      <main>
       <MuiThemeProvider>
         <Switch>
           <Route exact path='/' component={Playlist}/>
@@ -19,6 +23,7 @@ const Container = () => (
         </Switch>
       </MuiThemeProvider>
     </main>
-)
-
+    )
+  }
+}
 export default Container;

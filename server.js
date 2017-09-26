@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
+const sampleData = require('./src/lib/sampleData');
 
 // *** Webpack ***
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -39,10 +40,11 @@ app.use(cookieParser());
 
 // fetch top 10 songs by netVoteCount from songs collection and send to client
 app.get('/songs', function(req, res) {
-  Song.find({}).sort({netVoteCount: 'descending'}).limit(10)
-  .then(function(songs) {
-    res.json(songs);
-  });
+  res.json(sampleData);
+  // Song.find({}).sort({netVoteCount: 'descending'}).limit(10)
+  // .then(function(songs) {
+  //   res.json(songs);
+  // });
 });
 
 // fetch song research results and send to client
@@ -85,10 +87,16 @@ app.post('/songs', (req, res) => {
 
 // update vote on both songs collection and users collection
 app.put('/song', function(req, res) {
+  console.log(req.body.vote);
   Song.findOne({name: req.body.name})
   .then(function(song) {
     if (song) {
-      song.upVoteCount++;
+      if(req.body.vote < 0) {
+        song.downVoteCount--;
+      } else {
+        song.upVoteCount++;
+      }
+      console.log(song);
       song.save();
       res.sendStatus(201);
     }

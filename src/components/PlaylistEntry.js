@@ -1,6 +1,7 @@
 import React from 'react';
 // import { connect } from 'react-redux';
 // import { onUpVote } from '../redux/reducer';
+import {GridList, GridTile} from 'material-ui/GridList';
 
 const PlaylistEntry = (props) => {
   const handleUpVote = () => {
@@ -8,12 +9,18 @@ const PlaylistEntry = (props) => {
   }
 
   const handleDownVote = () => {
-
+    props.downVote(props.Song);
   }
   return (
     <div className="row">
       <button onClick={handleUpVote}>+</button>
+      <button onClick={handleDownVote}>-</button>
       <h2>{props.Song.name}</h2>
+      {/* <GridTile
+      title={props.Song.name}
+      >
+      </GridTile> */}
+      
       <p>{props.Song.upVoteCount}</p>
       <p>{props.Song.downVoteCount}</p>
     </div>

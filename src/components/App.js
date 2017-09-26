@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Navbar from './Navbar';
 import Container from './Container';
@@ -15,10 +16,16 @@ class App extends React.Component {
     };
   }
 
+  signUp(username, password) {
+    console.log(username, password);
+  }
+
   render() {
     return (
       <div>
-        <Navbar/>
+        <MuiThemeProvider>
+          <Navbar/>
+        </MuiThemeProvider>
         <Container/>
       </div>
     );
