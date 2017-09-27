@@ -7,6 +7,7 @@ import PlaylistEntry from './PlaylistEntry';
 import {GridList, GridTile} from 'material-ui/GridList';
 import Player from './Player.js';
 
+const spotifyApi = new SpotifyWebApi();
 
 class Playlist extends React.Component {
   constructor(props) {
@@ -19,13 +20,13 @@ class Playlist extends React.Component {
     this.getAllSongs = this.getAllSongs.bind(this);
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);
-    this.handleSongEntryClick = this.handleSongEntryClick.bind(this);
+    this.handlePlayButtonClick = this.handlePlayButtonClick.bind(this);
   }
 
   componentDidMount() {
     this.getSpotifyToken();
-    this.getAllSongs();
     this.getDeviceId();
+    this.getAllSongs();
   }
 
   getAllSongs() {
@@ -96,17 +97,20 @@ class Playlist extends React.Component {
   }
 
   playCurrentSong(deviceId) {
-    spotifyApi.play({device_id: deviceId, uris: ['spotify:track:' + this.state.currentSong.link.split['/track'][1]]})
+    //console.log(this.state.currentSonglink.split['track/'])
+    spotifyApi.play({device_id: deviceId, uris: ['spotify:track:' + this.state.currentSong.link.split('track/')[1]]})
       .then(function(data) {
        }.bind(this), function(err) {
          console.error(err);
     });
   };
 
-  handleSongEntryClick (song) {
-    console.log(song);
+  handlePlayButtonClick (song) {
+    //console.log(song.link.split('track/'));
+    console.log('clicked on', song.name)
     this.setState({currentSong: song});
-    console.log(this.state)
+    //console.log(this.state)
+    this.playCurrentSong(this.state.deviceId);
   }
 
   render() {
@@ -118,10 +122,10 @@ class Playlist extends React.Component {
         cols={1}
         >
         {
-          this.state.songs && this.state.songs.map((song) => {
+          this.state.songs && this.state.songs.map((song, i) => {
             return (
 
-              <PlaylistEntry downVote={this.downVote} handleClick={this.handleSongEntryClick} upVote={this.upVote} Song={song} />
+              <PlaylistEntry downVote={this.downVote} handlePlay={this.handlePlayButtonClick} upVote={this.upVote} Song={song} key={i} />
             )
           })
         }

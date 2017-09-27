@@ -13,7 +13,7 @@ const PlaylistEntry = (props) => {
   }
 
   const handleSongClick = () => {
-    props.handleClick(props.Song);
+    props.handlePlay(props.Song);
   }
 
   return (
