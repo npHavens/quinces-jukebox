@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import SpotifyWebApi from 'spotify-web-api-js';
 // import { connect } from 'react-redux';
 // import { getAllSongs } from '../redux/reducer';
 import PlaylistEntry from './PlaylistEntry';
@@ -12,15 +13,19 @@ class Playlist extends React.Component {
     super(props);
     this.state = {
       songs: [],
-      currentSong: ''
+      currentSong: '',
+      deviceId: ''
     }
     this.getAllSongs = this.getAllSongs.bind(this);
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);
     this.handleSongEntryClick = this.handleSongEntryClick.bind(this);
   }
+
   componentDidMount() {
+    this.getSpotifyToken();
     this.getAllSongs();
+    this.getDeviceId();
   }
 
   getAllSongs() {
@@ -61,12 +66,48 @@ class Playlist extends React.Component {
     })
   }
 
+  //synchronous function that gets token values from url parameters
+  getSpotifyToken() {
+    const getHashParams = () => {
+    let hashParams = {};
+    let e, r = /([^&;=]+)=?([^&;]*)/g;
+    let q = window.location.hash.substring(1);
+    while ( e = r.exec(q)) {
+      hashParams[e[1]] = decodeURIComponent(e[2]);
+    }
+      return hashParams;
+    }
+
+    const params = getHashParams();
+    const access_token = params.access_token;
+    const refresh_token = params.refresh_token;
+
+    spotifyApi.setAccessToken(access_token);
+    return access_token;
+  }
+
+  getDeviceId() {
+    spotifyApi.getMyDevices()
+      .then((data) => {
+        this.setState({deviceId : data.devices[0].id})
+      }, (err) =>{
+        console.error(err);
+      });
+  }
+
+  playCurrentSong(deviceId) {
+    spotifyApi.play({device_id: deviceId, uris: ['spotify:track:' + this.state.currentSong.link.split['/track'][1]]})
+      .then(function(data) {
+       }.bind(this), function(err) {
+         console.error(err);
+    });
+  };
+
   handleSongEntryClick (song) {
     console.log(song);
     this.setState({currentSong: song});
     console.log(this.state)
   }
-
 
   render() {
       return (
