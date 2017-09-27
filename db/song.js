@@ -4,11 +4,11 @@ const User = require('./user');
 const Schema = mongoose.Schema;
 
 const SongSchema = new Schema({
-  name: {type: String, index: {unique: true}},
-  userID: Number,
+  name: {type: String},
   image: String,
   link: String,
-  upVoteCount: {type: Number, default: 0},
+  userName: String,
+  upVoteCount: {type: Number, default: 1},
   downVoteCount: {type: Number, default: 0},
   netVoteCount: Number
 });

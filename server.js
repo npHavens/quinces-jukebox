@@ -1,9 +1,6 @@
 // *** Express ***
 const express = require('express');
 const app = express();
-const querystring = require('querystring');
-const cookieParser = require('cookie-parser');
-const sampleData = require('./src/lib/sampleData');
 
 // *** Webpack ***
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -31,17 +28,26 @@ const Song = require('./db/song');
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+const querystring = require('querystring');
+
+// *** Session ***
+var session = require('express-session');
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}));
 
 // *** Helper ***
 const spotifyHelpers = require('./helpers/spotifyHelpers.js');
-app.use(cookieParser());
 
 // *** Routes ***
 
-// fetch top 10 songs by netVoteCount from songs collection and send to client
+// fetch top 50 songs by netVoteCount from songs collection and send to client
 app.get('/songs', function(req, res) {
-  //res.json(sampleData);
-  Song.find({}).sort({netVoteCount: 'descending'}).limit(10)
+  Song.find({}).sort({netVoteCount: 'descending'}).limit(50)
   .then(function(songs) {
     res.json(songs);
   });
@@ -55,88 +61,77 @@ app.get('/songs/search', (req, res) => {
     });
 });
 
-// POST at /songs
-app.post('/songs', (req, res) => {
-  new Song({
-    name: "Sound of Silence",
-    userID: 1,
-    image: "https://i.scdn.co/image/cc3bbe5a796b2b23384862d046f55e7118380db9",
-    upVoteCount: 0,
-    downVoteCount: 0,
-    netCount: 0
-  }).save((err) => {
-    if(err) res.json(err);
-    else res.status(201).send('Sucessfully inserted');
+// add song to both user collection and songs collection
+app.post('/songs', function(req, res) {
+  var newSong = new Song({
+    name: req.body.name,
+    image: req.body.image,
+    link: req.body.link,
+    userName: req.session.username
+  });
+
+  User.findOne({name: req.session.username})
+  .then(function(user) {
+    if (user) {
+      user.addedSongs.push(req.body.name);
+      user.save();
+      return newSong.save();
+    }
   })
-})
-
-// update vote on both songs collection and users collection
-app.post('/songs/votes', function(req, res) {
-  // need to get from client: song name, user name, upvote or downvote
-});
-
-// POST at /songs
-// add song to both users collection and songs collection
-app.post('/songs', (req, res) => {
-  var newSong = new Song(req.body);
-  newSong.save()
-  .then((newSong) => {
-    res.status(201).send(newSong);
+  .then(function() {
+    res.sendStatus(201);
   });
 });
 
 // update vote on both songs collection and users collection
 app.put('/song', function(req, res) {
-  console.log(req.body.vote);
   Song.findOne({name: req.body.name})
   .then(function(song) {
     if (song) {
-      if(req.body.vote < 0) {
-        song.downVoteCount++;
-      } else {
+      if(req.body.vote > 0) {
         song.upVoteCount++;
+      } else {
+        song.downVoteCount++;
       }
-      console.log(song);
       song.save();
       res.sendStatus(201);
     }
   });
 });
 
-
-// POST at /songs
-// add song to both users collection and songs collection
-
-// POST at /songs/votesg
-
-
-// POST at /login
-// direct to song playlist page
-
-// add user to users collection and direct them to song playlist page
+// add user to users collection
 app.post('/signup', function(req, res) {
-  console.log('->', req.body);
-  new User({name: req.body.username}).save()
-  .then(function() {
-    // direct them to song playlist page
+  var newUser = new User({
+    name: req.body.username
+  });
+
+  User.findOne({name: req.body.username})
+  .then(function(user) {
+    if (!user) {
+      newUser.save()
+      .then(function() {
+        req.session.username = req.body.username;
+        res.sendStatus(201);
+      });
+    } else {
+      res.send('User already exist!');
+    }
   });
 });
 
+// POST at /login
 // GET at /logout
-// direct to home page
 
-
-//// *** Host Authentication Routes ***
-
+// Host Authentication
 app.get('/hostLogin', (req, res) => {
   console.log('logging in host');
   spotifyHelpers.handleHostLogin(req, res);
-})
+});
 
 app.get('/callback', (req, res) => {
   console.log('redirecting');
   spotifyHelpers.redirectAfterLogin(req, res);
-})
+});
 
 // send 404 to client
 app.get('/*', function(req, res) {
