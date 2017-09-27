@@ -24,38 +24,47 @@ const Song = mongoose.model('song', SongSchema);
 new Song({name: 'Purple Rain',
   image: 'https://i.scdn.co/image/00f45f84cc30a651bd9575c9663465996780c9cd',
   link: 'https://open.spotify.com/track/54X78diSLoUDI3joC2bjMz',
+  userName: 'nick',
   upVoteCount: 6, downVoteCount: 2}).save();
 new Song({name: 'When Doves Cry',
   image: 'https://i.scdn.co/image/00f45f84cc30a651bd9575c9663465996780c9cd',
   link: 'https://open.spotify.com/track/51H2y6YrNNXcy3dfc3qSbA',
+  userName: 'nick',
   upVoteCount: 8, downVoteCount: 3}).save();
 new Song({name: 'Let\'s Go Crazy',
   image: 'https://i.scdn.co/image/00f45f84cc30a651bd9575c9663465996780c9cd',
   link: 'https://open.spotify.com/track/0QeI79sp1vS8L3JgpEO7mD',
+  userName: 'nick',
   upVoteCount: 9, downVoteCount: 8}).save();
 new Song({name: 'I Would Die 4 U',
   image: 'https://i.scdn.co/image/00f45f84cc30a651bd9575c9663465996780c9cd',
   link: 'https://open.spotify.com/track/6fBwVe6udYdnRqwqo06if8',
+  userName: 'nick',
   upVoteCount: 2, downVoteCount: 8}).save();
 new Song({name: 'The Beautiful Ones',
   image: 'https://i.scdn.co/image/00f45f84cc30a651bd9575c9663465996780c9cd',
   link: 'https://open.spotify.com/track/1BNtFSws7fjbn9aVBPA79j',
+  userName: 'jessica',
   downVoteCount: 4}).save();
 new Song({name: 'Darling Nikki',
   image: 'https://i.scdn.co/image/00f45f84cc30a651bd9575c9663465996780c9cd',
   link: 'https://open.spotify.com/track/0khi86hc79RfsRC0rrkkA2',
+  userName: 'jessica',
   upVoteCount: 12, downVoteCount: 5}).save();
 new Song({name: 'Baby I\'m A Star',
   image: 'https://i.scdn.co/image/00f45f84cc30a651bd9575c9663465996780c9cd',
   link: 'https://open.spotify.com/track/2soBvUQBf5rbMj9HIyhzzK',
+  userName: 'jessica',
   upVoteCount: 10, downVoteCount: 1}).save();
 new Song({name: 'Take Me With U',
   image: 'https://i.scdn.co/image/00f45f84cc30a651bd9575c9663465996780c9cd',
   link: 'https://open.spotify.com/track/765k9tDIFOnoOfkO2cgitB',
+  userName: 'jessica',
   upVoteCount: 9}).save();
 new Song({name: 'Purple Rain - 2015 Paisley Park Remaster',
   image: 'https://i.scdn.co/image/00f45f84cc30a651bd9575c9663465996780c9cd',
-  link: 'https://open.spotify.com/track/1vfvy1Of0iJLDjh5eMfVyI'})
+  link: 'https://open.spotify.com/track/1vfvy1Of0iJLDjh5eMfVyI',
+  userName: 'jessica'})
   .save();
 
 module.exports = Song;
