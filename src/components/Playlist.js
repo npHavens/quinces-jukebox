@@ -96,27 +96,20 @@ class Playlist extends React.Component {
       });
   }
 
-  playCurrentSong(deviceId) {
-    //console.log(this.state.currentSonglink.split['track/'])
-    spotifyApi.play({device_id: deviceId, uris: ['spotify:track:' + this.state.currentSong.link.split('track/')[1]]})
-      .then(function(data) {
-       }.bind(this), function(err) {
-         console.error(err);
-    });
+  playCurrentSong(deviceId, trackId) {
+    spotifyApi.play({device_id: deviceId, uris: ['spotify:track:' + trackId]});
   };
 
   handlePlayButtonClick (song) {
-    //console.log(song.link.split('track/'));
-    console.log('clicked on', song.name)
+    const trackId = song.link.split('track/')[1]
     this.setState({currentSong: song});
-    //console.log(this.state)
-    this.playCurrentSong(this.state.deviceId);
+    this.playCurrentSong(this.state.deviceId, trackId);
   }
 
   render() {
       return (
         <div>
-          {this.state.currentSong && <Player song={this.state.currentSong}/>}
+          {this.state.currentSong && <Player trackId={this.state.currentSong.link.split('track/')[1]}/>}
         <GridList
         cellHeight={180}
         cols={1}
