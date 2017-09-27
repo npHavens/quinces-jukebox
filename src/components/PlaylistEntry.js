@@ -12,13 +12,13 @@ const PlaylistEntry = (props) => {
     props.downVote(props.Song);
   }
 
-  const handleSongClick = () => {
+  const handlePlayButtonClick = () => {
     props.handlePlay(props.Song);
   }
 
   return (
     <div className="row" >
-      <button onClick={handleSongClick}>Play Now</button>
+      <button onClick={handlePlayButtonClick}>Play Now</button>
       <button onClick={handleUpVote}>+</button>
       <button onClick={handleDownVote}>-</button>
       <h2>{props.Song.name}</h2>

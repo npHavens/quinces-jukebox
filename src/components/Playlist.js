@@ -66,7 +66,6 @@ class Playlist extends React.Component {
       console.log(err);
     })
   }
-
   //synchronous function that gets token values from url parameters
   getSpotifyToken() {
     const getHashParams = () => {
@@ -117,8 +116,8 @@ class Playlist extends React.Component {
         {
           this.state.songs && this.state.songs.map((song, i) => {
             return (
-
               <PlaylistEntry downVote={this.downVote} handlePlay={this.handlePlayButtonClick} upVote={this.upVote} Song={song} key={i} />
+
             )
           })
         }
