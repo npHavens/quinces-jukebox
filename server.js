@@ -92,7 +92,7 @@ app.put('/song', function(req, res) {
   .then(function(song) {
     if (song) {
       if(req.body.vote < 0) {
-        song.downVoteCount--;
+        song.downVoteCount++;
       } else {
         song.upVoteCount++;
       }

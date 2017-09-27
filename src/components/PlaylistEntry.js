@@ -23,6 +23,7 @@ const PlaylistEntry = (props) => {
       
       <p>{props.Song.upVoteCount}</p>
       <p>{props.Song.downVoteCount}</p>
+      <p>{props.Song.netVoteCount}</p>
     </div>
   )
 }
