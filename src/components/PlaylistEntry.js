@@ -17,7 +17,8 @@ const PlaylistEntry = (props) => {
   }
 
   return (
-    <div className="row" onClick={handleSongClick}>
+    <div className="row" >
+      <button onClick={handleSongClick}>Play Now</button>
       <button onClick={handleUpVote}>+</button>
       <button onClick={handleDownVote}>-</button>
       <h2>{props.Song.name}</h2>
