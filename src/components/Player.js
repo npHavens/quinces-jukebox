@@ -38,6 +38,7 @@ class Player extends React.Component {
   }
 
   getDeviceId(cb) {
+    console.log('getting device id')
     spotifyApi.getMyDevices()
       .then((data) => {
         cb(data.devices[0].id);
@@ -47,6 +48,7 @@ class Player extends React.Component {
   }
 
   playCurrentSong(deviceId) {
+    console.log('playing song')
     spotifyApi.play({device_id: deviceId, uris: ['spotify:track:' + this.state.currentSongId]})
       .then(function(data) {
        }.bind(this), function(err) {

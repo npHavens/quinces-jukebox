@@ -17,6 +17,7 @@ class Playlist extends React.Component {
     this.getAllSongs = this.getAllSongs.bind(this);
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);
+    this.handleSongEntryClick = this.handleSongEntryClick.bind(this);
   }
   componentDidMount() {
     this.getAllSongs();
@@ -26,8 +27,7 @@ class Playlist extends React.Component {
     axios.get(`/songs`)
     .then((response) => {
       this.setState({
-        songs: response.data,
-        currentSong: response.data[0]
+        songs: response.data
       })
     })
     .catch((err) => {
@@ -61,6 +61,12 @@ class Playlist extends React.Component {
     })
   }
 
+  handleSongEntryClick (song) {
+    console.log(song);
+    this.setState({currentSong: song});
+    console.log(this.state)
+  }
+
 
   render() {
       return (
@@ -74,7 +80,7 @@ class Playlist extends React.Component {
           this.state.songs && this.state.songs.map((song) => {
             return (
 
-              <PlaylistEntry downVote={this.downVote} upVote={this.upVote} Song={song} />
+              <PlaylistEntry downVote={this.downVote} handleClick={this.handleSongEntryClick} upVote={this.upVote} Song={song} />
             )
           })
         }
