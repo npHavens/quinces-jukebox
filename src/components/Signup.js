@@ -9,8 +9,7 @@ class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: ''
+      username: ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.signUp = this.signUp.bind(this);
@@ -24,14 +23,8 @@ class Signup extends React.Component {
   }
 
   signUp(e) {
-    auth(this.state.email, this.state.password)
-      .catch(e => {
-        console.log(e);
-        return;
-      })
     let newUser = {};
     newUser.username = this.state.username;
-    newUser.password = this.state.password;
     axios.post('/signup', newUser)
     .then((response) => {
       this.props.history.push('/')
@@ -44,7 +37,6 @@ class Signup extends React.Component {
         <TextField onChange={this.handleChange} name="username" value={this.state.username} hintText="Username"/>
         <br />
         <br />
-        <TextField onChange={this.handleChange} name="password" value={this.state.password} hintText="Password"/>
         <FlatButton onClick={this.signUp} label="Sign Up" />
     </div>
     )
