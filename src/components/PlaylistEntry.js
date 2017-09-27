@@ -11,8 +11,13 @@ const PlaylistEntry = (props) => {
   const handleDownVote = () => {
     props.downVote(props.Song);
   }
+
+  const handleSongClick = () => {
+    props.handleClick(props.Song);
+  }
+
   return (
-    <div className="row">
+    <div className="row" onClick={handleSongClick}>
       <button onClick={handleUpVote}>+</button>
       <button onClick={handleDownVote}>-</button>
       <h2>{props.Song.name}</h2>
@@ -20,7 +25,7 @@ const PlaylistEntry = (props) => {
       title={props.Song.name}
       >
       </GridTile> */}
-      
+
       <p>{props.Song.upVoteCount}</p>
       <p>{props.Song.downVoteCount}</p>
       <p>{props.Song.netVoteCount}</p>
