@@ -19,7 +19,7 @@ class Search extends React.Component{
   }
 
   onSearch(query){
-    axios.get('http://localhost:3000/songs/search', {
+    axios.get('/songs/search', {
       params: {
         query: this.state.query
       }
@@ -43,7 +43,7 @@ class Search extends React.Component{
     newSong.image = song.album.images[2].url;
     newSong.link = song.album.external_urls.spotify;
     newSong.userName = "jessica";
-    axios.post('http://localhost:3000/songs', newSong)
+    axios.post('/songs', newSong)
     .then((response) => {
       this.props.history.push('/');
       console.log(response);
