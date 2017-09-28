@@ -1,24 +1,28 @@
 // *** Express ***
 const express = require('express');
 const app = express();
+var cors = require('cors');
 
 // *** Webpack ***
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpack = require('webpack');
-const webpackConfig = require('./webpack.config.js');
-const compiler = webpack(webpackConfig);
-app.use(webpackDevMiddleware(compiler, {
-  hot: true,
-  filename: 'bundle.js',
-  publicPath: '/',
-  stats: {
-  colors: true,
-  },
-  historyApiFallback: true,
-}));
+// const webpackDevMiddleware = require('webpack-dev-middleware');
+// const webpack = require('webpack');
+// const webpackConfig = require('./webpack.config.js');
+// const compiler = webpack(webpackConfig);
+// app.use(webpackDevMiddleware(compiler, {
+//   hot: true,
+//   filename: 'bundle.js',
+//   publicPath: '/',
+//   stats: {
+//   colors: true,
+//   },
+//   historyApiFallback: true,
+// }));
+
+app.use(cors());
 
 // *** Static Assets ***
 app.use(express.static(__dirname + '/www'));
+
 
 // *** Database ***
 const User = require('./db/user');
@@ -63,14 +67,15 @@ app.get('/songs/search', (req, res) => {
 
 // add song to both user collection and songs collection
 app.post('/songs', function(req, res) {
+  console.log(req.body);
   var newSong = new Song({
     name: req.body.name,
     image: req.body.image,
     link: req.body.link,
-    userName: req.session.username
+    userName: req.body.userName
   });
 
-  User.findOne({name: req.session.username})
+  User.findOne({name: req.body.userName})
   .then(function(user) {
     if (user) {
       user.addedSongs.push(req.body.name);
@@ -118,6 +123,13 @@ app.post('/signup', function(req, res) {
     }
   });
 });
+
+app.get('/users', (req,res) => {
+  User.find({})
+  .then(function(users) {
+    res.json(users);
+  });
+})
 
 // POST at /login
 // GET at /logout

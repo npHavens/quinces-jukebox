@@ -15,22 +15,25 @@ class Playlist extends React.Component {
     this.state = {
       songs: [],
       currentSong: '',
-      deviceId: ''
+      deviceId: '',
+      currentUser: 'annonymous'
     }
     this.getAllSongs = this.getAllSongs.bind(this);
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);
     this.handlePlayButtonClick = this.handlePlayButtonClick.bind(this);
+    this.getUser = this.getUser.bind(this);
   }
 
   componentDidMount() {
     this.getSpotifyToken();
     this.getDeviceId();
     this.getAllSongs();
+    this.getUser();
   }
 
   getAllSongs() {
-    axios.get(`/songs`)
+    axios.get(`http://localhost:3000/songs`)
     .then((response) => {
       this.setState({
         songs: response.data
@@ -45,7 +48,7 @@ class Playlist extends React.Component {
     // need to check if song as already been voted
     // on by person
     song.vote = 1;
-    axios.put('/song', song)
+    axios.put('http://localhost:3000/song', song)
     .then((response) => {
       this.getAllSongs();
     })
@@ -58,13 +61,21 @@ class Playlist extends React.Component {
     // need to check if song as already been voted
     // on by person
     song.vote = -1;
-    axios.put('/song', song)
+    axios.put('http://localhost:3000/song', song)
     .then((response) => {
       this.getAllSongs();
     })
     .catch((err) => {
       console.log(err);
     })
+  }
+
+  getUser() {
+    if(this.props.location.state){
+      this.setState({
+        currentUser: this.props.location.state.currentUser
+      });
+    }
   }
   //synchronous function that gets token values from url parameters
   getSpotifyToken() {

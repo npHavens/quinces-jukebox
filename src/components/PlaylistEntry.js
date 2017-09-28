@@ -17,19 +17,23 @@ const PlaylistEntry = (props) => {
   }
 
   return (
+    <div>
     <div className="row" >
       <button onClick={handlePlayButtonClick}>Play Now</button>
       <button onClick={handleUpVote}>+</button>
       <button onClick={handleDownVote}>-</button>
+    </div>
       <h2>{props.Song.name}</h2>
       {/* <GridTile
       title={props.Song.name}
       >
       </GridTile> */}
-
+    <div className="row" >
       <p>{props.Song.upVoteCount}</p>
       <p>{props.Song.downVoteCount}</p>
       <p>{props.Song.netVoteCount}</p>
+      <p>{props.Song.userName}</p>
+    </div>
     </div>
   )
 }

@@ -25,7 +25,7 @@ class Signup extends React.Component {
   signUp(e) {
     let newUser = {};
     newUser.username = this.state.username;
-    axios.post('/signup', newUser)
+    axios.post('http://localhost:3000/signup', newUser)
     .then((response) => {
       this.props.history.push('/')
     })
