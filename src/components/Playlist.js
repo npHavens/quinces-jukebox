@@ -1,8 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import SpotifyWebApi from 'spotify-web-api-js';
-// import { connect } from 'react-redux';
-// import { getAllSongs } from '../redux/reducer';
 import PlaylistEntry from './PlaylistEntry';
 import {GridList, GridTile} from 'material-ui/GridList';
 import Player from './Player.js';

@@ -6,8 +6,6 @@ import FlatButton from 'material-ui/FlatButton';
 import SearchEntry from './SearchEntry';
 import { Route } from 'react-router-dom';
 
-import onSearch from '../redux/reducer';
-
 class Search extends React.Component{
   constructor(props) {
     super(props)
@@ -74,5 +72,4 @@ class Search extends React.Component{
   }
 }
 
-const mapDispatch = {onSearch};
-export default connect(null, mapDispatch)(Search);
+export default Search;
