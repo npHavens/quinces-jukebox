@@ -26,7 +26,6 @@ const Login = (props) => {
       >
       {menuItems(props.users)}
     </SelectField>
-    {/* <button onClick={this.onClick}>login</button> */}
   </div>
   )
 }

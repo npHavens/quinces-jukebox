@@ -17,7 +17,7 @@ class Container extends React.Component {
       <MuiThemeProvider>
         <Switch>
           <Route exact path='/' component={Playlist}/>
-          <Route exact path='/sign-up' component={Signup}/>
+          <Route exact path='/signup' component={Signup}/>
           <Route exact path='/login' component={Login}/>
           <Route exact path='/search' component={Search}/>
         </Switch>

@@ -6,6 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import SearchEntry from './SearchEntry';
 import { Route } from 'react-router-dom';
 import Login from './Login';
+import { Link } from 'react-router-dom';
 
 class Search extends React.Component{
   constructor(props) {
@@ -94,6 +95,7 @@ class Search extends React.Component{
       <div>
         <Login onChange={this.handleUserChange} users={this.state.users} currentUser={this.state.currentUser}/>
         <TextField onChange={this.onChange}/>
+        <Link to="/signup">Don't see your name? Sign up here!</Link>
         <button onClick={this.onSearch}>search</button>
         <div>
         {
