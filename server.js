@@ -4,19 +4,19 @@ const app = express();
 var cors = require('cors');
 
 // *** Webpack ***
-// const webpackDevMiddleware = require('webpack-dev-middleware');
-// const webpack = require('webpack');
-// const webpackConfig = require('./webpack.config.js');
-// const compiler = webpack(webpackConfig);
-// app.use(webpackDevMiddleware(compiler, {
-//   hot: true,
-//   filename: 'bundle.js',
-//   publicPath: '/',
-//   stats: {
-//   colors: true,
-//   },
-//   historyApiFallback: true,
-// }));
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpack = require('webpack');
+const webpackConfig = require('./webpack.config.js');
+const compiler = webpack(webpackConfig);
+app.use(webpackDevMiddleware(compiler, {
+  hot: true,
+  filename: 'bundle.js',
+  publicPath: '/',
+  stats: {
+  colors: true,
+  },
+  historyApiFallback: true,
+}));
 
 app.use(cors());
 

@@ -37,7 +37,7 @@ class Login extends React.Component {
   }
 
   getAllUsers() {
-    axios.get(`http://localhost:3000/users`)
+    axios.get(`/users`)
     .then((response) => {
 
       this.setState({

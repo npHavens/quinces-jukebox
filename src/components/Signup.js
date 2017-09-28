@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import { withRouter } from "react-router-dom";
-import { auth } from '../../helpers/auth';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -25,7 +24,7 @@ class Signup extends React.Component {
   signUp(e) {
     let newUser = {};
     newUser.username = this.state.username;
-    axios.post('http://localhost:3000/signup', newUser)
+    axios.post('/signup', newUser)
     .then((response) => {
       this.props.history.push('/')
     })

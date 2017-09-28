@@ -1,8 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import SpotifyWebApi from 'spotify-web-api-js';
-// import { connect } from 'react-redux';
-// import { getAllSongs } from '../redux/reducer';
 import PlaylistEntry from './PlaylistEntry';
 import {GridList, GridTile} from 'material-ui/GridList';
 import Player from './Player.js';
@@ -33,7 +31,7 @@ class Playlist extends React.Component {
   }
 
   getAllSongs() {
-    axios.get(`http://localhost:3000/songs`)
+    axios.get(`/songs`)
     .then((response) => {
       this.setState({
         songs: response.data
@@ -48,7 +46,7 @@ class Playlist extends React.Component {
     // need to check if song as already been voted
     // on by person
     song.vote = 1;
-    axios.put('http://localhost:3000/song', song)
+    axios.put('/song', song)
     .then((response) => {
       this.getAllSongs();
     })
@@ -61,7 +59,7 @@ class Playlist extends React.Component {
     // need to check if song as already been voted
     // on by person
     song.vote = -1;
-    axios.put('http://localhost:3000/song', song)
+    axios.put('/song', song)
     .then((response) => {
       this.getAllSongs();
     })
