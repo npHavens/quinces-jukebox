@@ -22,6 +22,7 @@ const PlaylistEntry = (props) => {
       <button onClick={handleUpVote}>+</button>
       <button onClick={handleDownVote}>-</button>
       <h2>{props.Song.name}</h2>
+      <p>{props.Song.userName}</p>
       {/* <GridTile
       title={props.Song.name}
       >
