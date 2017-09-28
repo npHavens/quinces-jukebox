@@ -63,14 +63,16 @@ app.get('/songs/search', (req, res) => {
 
 // add song to both user collection and songs collection
 app.post('/songs', function(req, res) {
+  console.log(req.body);
   var newSong = new Song({
     name: req.body.name,
     image: req.body.image,
     link: req.body.link,
-    userName: req.session.username
+    userName: req.body.userName
+    // userName: req.session.username
   });
 
-  User.findOne({name: req.session.username})
+  User.findOne({name: req.body.userName})
   .then(function(user) {
     if (user) {
       user.addedSongs.push(req.body.name);
