@@ -48,6 +48,7 @@ const generateRandomString = (length) => {
 
 //redirect host user to Spotify login page to obtain authorization code
 exports.handleHostLogin = (req, res) => {
+  console.log(credentials.redirect_uri)
   const state = generateRandomString(16);
   const scope = 'user-read-private user-read-email user-read-playback-state user-modify-playback-state';
 
@@ -58,7 +59,7 @@ exports.handleHostLogin = (req, res) => {
       response_type: 'code',
       client_id: credentials.client_id,
       scope: scope,
-      redirect_uri: 'http://localhost:3000/callback',
+      redirect_uri: credentials.redirect_uri + '/callback',
       state: state
     }));
 };
@@ -71,7 +72,7 @@ exports.redirectAfterLogin = (req, res) => {
     url: 'https://accounts.spotify.com/api/token',
     form: {
       code: code,
-      redirect_uri: 'http://localhost:3000/callback',
+      redirect_uri: credentials.redirect_uri + '/callback',
       grant_type: 'authorization_code'
     },
     headers: {
@@ -88,9 +89,8 @@ exports.redirectAfterLogin = (req, res) => {
       const access_token = body.access_token;
       const refresh_token = body.refresh_token;
 
-
       //redirect host user back to playlist page and pass token to browser
-      res.redirect('http://localhost:3000/#' +
+      res.redirect(credentials.redirect_uri + '#' +
         querystring.stringify({
           access_token: access_token,
           refresh_token: refresh_token
