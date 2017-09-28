@@ -14,5 +14,4 @@ const SearchEntry = (props) => {
   )
 }
 
-const mapDispatch = {};
-export default connect(null, mapDispatch)(SearchEntry);
+export default SearchEntry;
