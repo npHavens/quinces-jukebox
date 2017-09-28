@@ -5,17 +5,28 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import SearchEntry from './SearchEntry';
 import { Route } from 'react-router-dom';
+import Login from './Login';
+import { Link } from 'react-router-dom';
 
 class Search extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
       query: '',
-      results: []
+      results: [],
+      users: [],
+      currentUser: ''
     }
     this.onSearch = this.onSearch.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onAdd = this.onAdd.bind(this);
+    this.getAllUsers = this.getAllUsers.bind(this);
+    this.menuItems = this.menuItems.bind(this);
+    this.handleUserChange = this.handleUserChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.getAllUsers();
   }
 
   onSearch(query){
@@ -42,7 +53,7 @@ class Search extends React.Component{
     newSong.name = song.name;
     newSong.image = song.album.images[2].url;
     newSong.link = song.album.external_urls.spotify;
-    newSong.userName = "jessica";
+    newSong.userName = this.state.currentUser;
     axios.post('/songs', newSong)
     .then((response) => {
       this.props.history.push('/');
@@ -53,10 +64,38 @@ class Search extends React.Component{
     });
   }
 
+  handleUserChange (user){
+    this.setState({currentUser: user});
+  };
+
+  menuItems(users) {
+    return users.map((user) => (
+      <MenuItem
+        key={user._id}
+        value={user.name}
+        primaryText={user.name}
+      />
+    ));
+  }
+
+  getAllUsers() {
+    axios.get(`/users`)
+    .then((response) => {
+      this.setState({
+       users: response.data
+      })
+    })
+    .catch((err) => {
+      console.error.bind(err);
+    })
+  }
+
   render() {
     return (
       <div>
+        <Login onChange={this.handleUserChange} users={this.state.users} currentUser={this.state.currentUser}/>
         <TextField onChange={this.onChange}/>
+        <Link to="/signup">Don't see your name? Sign up here!</Link>
         <button onClick={this.onSearch}>search</button>
         <div>
         {
