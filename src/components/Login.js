@@ -9,23 +9,24 @@ class Login extends React.Component {
     this.state = {
       users: [],
       items: [],
-      user:''
+      currentUser: ''
     }
     this.getAllUsers = this.getAllUsers.bind(this);
     this.menuItems = this.menuItems.bind(this);
-    this.handleChange = this.handleChange.bind(this); 
+    this.handleChange = this.handleChange.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
     this.getAllUsers();
   }
 
+
   handleChange (event, index, user){
-    this.setState({user});
+    this.setState({currentUser: user});
   };
 
   menuItems(users) {
-    console.log(users);
     return users.map((user) => (
       <MenuItem
         key={user._id}
@@ -36,7 +37,7 @@ class Login extends React.Component {
   }
 
   getAllUsers() {
-    axios.get(`/users`)
+    axios.get(`http://localhost:3000/users`)
     .then((response) => {
 
       this.setState({
@@ -48,17 +49,25 @@ class Login extends React.Component {
     })
   }
 
+  onClick() {
+    this.props.history.push({
+      pathname: '/',
+      state: { currentUser: this.state.currentUser }
+    })
+  }
+
   render() {
     return (
       <div>
         <h1>login component</h1>
         <SelectField
           hintText="Select a name"
-          value={this.state.user}
+          value={this.state.currentUser}
           onChange={this.handleChange}
           >
           {this.menuItems(this.state.users)}
         </SelectField>
+        <button onClick={this.onClick}>login</button>
       </div>
     )
   }
