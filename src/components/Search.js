@@ -52,7 +52,7 @@ class Search extends React.Component{
     let newSong = {};
     newSong.name = song.name;
     newSong.image = song.album.images[2].url;
-    newSong.link = song.album.external_urls.spotify;
+    newSong.link = song.external_urls.spotify;
     newSong.userName = this.state.currentUser;
     axios.post('/songs', newSong)
     .then((response) => {
