@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import SearchEntry from './SearchEntry';
 import { Route } from 'react-router-dom';
 import Login from './Login';
@@ -22,7 +22,6 @@ class Search extends React.Component{
     this.onChange = this.onChange.bind(this);
     this.onAdd = this.onAdd.bind(this);
     this.getAllUsers = this.getAllUsers.bind(this);
-    // this.menuItems = this.menuItems.bind(this);
     this.handleUserChange = this.handleUserChange.bind(this);
   }
 
@@ -64,7 +63,6 @@ class Search extends React.Component{
     axios.post('/songs', newSong)
     .then((response) => {
       window.location.href = "/hostLogin";
-      // this.props.history.push('/');
     })
     .catch((err) => {
       console.log(err);
@@ -81,16 +79,6 @@ class Search extends React.Component{
     }
   };
 
-  // menuItems(users) {
-  //   return users.map((user) => (
-  //     <MenuItem
-  //       key={user._id}
-  //       value={user}
-  //       primaryText={user.name}
-  //     />
-  //   ));
-  // }
-
   getAllUsers() {
     axios.get(`/users`)
     .then((response) => {
@@ -105,17 +93,31 @@ class Search extends React.Component{
   }
 
   render() {
+    const styles = {
+      inside: {
+        width: '30%',
+        display: 'inline-block'
+      },
+      textAlign: 'center',
+      width: '100%',
+      height: '100%'
+    }
     return (
-      <div>
+      <div style={styles}>
+        <div style={styles.inside}>
         <Login onChange={this.handleUserChange} users={this.state.users} currentUser={this.state.currentUser}/>
         <TextField onChange={this.onChange}/>
+        <br />
+        <br />
         <Link to="/signup">Don't see your name? Sign up here!</Link>
-        <button onClick={this.onSearch}>search</button>
+        <br />
+        <br />
+        <RaisedButton onClick={this.onSearch} label="Search"/>
         <div>
         {
-        this.state.results && this.state.results.map((result) => {
+        this.state.results && this.state.results.map((result, i) => {
           return (
-            <SearchEntry onAdd={this.onAdd} Result={result}/>
+            <SearchEntry key={i} onAdd={this.onAdd} Result={result}/>
           )
         })
       }
@@ -130,6 +132,7 @@ class Search extends React.Component{
         })
       }
       </ul>
+      </div>
      </div>
     )
   }
