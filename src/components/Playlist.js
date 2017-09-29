@@ -108,20 +108,31 @@ class Playlist extends React.Component {
     spotifyApi.play({device_id: deviceId, uris: ['spotify:track:' + trackId]});
   };
 
-  handlePlayButtonClick (song) {
-    const trackId = song.link.split('track/')[1]
-    this.setState({currentSong: song});
+  handlePlayButtonClick () {
+    const trackId = this.state.songs[0].link.split('track/')[1]
+    this.setState({currentSong: this.state.songs[0]});
     this.playCurrentSong(this.state.deviceId, trackId);
   }
 
   render() {
+    const playerStyle = {
+      display: 'inline-block',
+      width: '45%',
+      verticalAlign: 'top'
+    }
+    const playListStyle = {
+      display: 'inline-block',
+      width:'45%',
+    }
       return (
         <div>
+          {this.state.deviceId &&
+            <button onClick={this.handlePlayButtonClick}>Play top song</button>
+          }
+          <div style={playerStyle}>
           {this.state.currentSong && <Player trackId={this.state.currentSong.link.split('track/')[1]}/>}
-        <GridList
-        cellHeight={180}
-        cols={1}
-        >
+          </div>
+          <div style={playListStyle} >
         {
           this.state.songs && this.state.songs.map((song, i) => {
             return (
@@ -130,14 +141,10 @@ class Playlist extends React.Component {
             )
           })
         }
-        </GridList>
+        </div>
         </div>
       )
   }
 }
 
 export default Playlist;
-// REDUX CODE
-// const mapState = ({songs}) => ({songs});
-// const mapDispatch = {getAllSongs};
-// export default connect(mapState, mapDispatch)(Playlist);

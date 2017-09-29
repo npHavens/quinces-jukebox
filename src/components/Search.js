@@ -15,13 +15,14 @@ class Search extends React.Component{
       query: '',
       results: [],
       users: [],
-      currentUser: ''
+      currentUser: '',
+      usersSongs: []
     }
     this.onSearch = this.onSearch.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onAdd = this.onAdd.bind(this);
     this.getAllUsers = this.getAllUsers.bind(this);
-    this.menuItems = this.menuItems.bind(this);
+    // this.menuItems = this.menuItems.bind(this);
     this.handleUserChange = this.handleUserChange.bind(this);
   }
 
@@ -51,13 +52,18 @@ class Search extends React.Component{
   onAdd(song) {
     let newSong = {};
     newSong.name = song.name;
-    newSong.image = song.album.images[2].url;
+    newSong.image = song.album.images[1].url;
     newSong.link = song.external_urls.spotify;
-    newSong.userName = this.state.currentUser;
+    if(this.state.currentUser === '') {
+      newSong.userName = 'anonymous';
+    } else {
+      newSong.userName = this.state.currentUser.name;
+    }
+    console.log(newSong);
     axios.post('/songs', newSong)
     .then((response) => {
-      this.props.history.push('/');
-      console.log(response);
+      window.location.href = "/hostLogin";
+      // this.props.history.push('/');
     })
     .catch((err) => {
       console.log(err);
@@ -65,18 +71,24 @@ class Search extends React.Component{
   }
 
   handleUserChange (user){
-    this.setState({currentUser: user});
+    console.log(user);
+    this.setState({
+      currentUser: user,
+    });
+    if(user.addedSongs.length > 0) {
+      this.setState({usersSongs: user.addedSongs})
+    }
   };
 
-  menuItems(users) {
-    return users.map((user) => (
-      <MenuItem
-        key={user._id}
-        value={user.name}
-        primaryText={user.name}
-      />
-    ));
-  }
+  // menuItems(users) {
+  //   return users.map((user) => (
+  //     <MenuItem
+  //       key={user._id}
+  //       value={user}
+  //       primaryText={user.name}
+  //     />
+  //   ));
+  // }
 
   getAllUsers() {
     axios.get(`/users`)
@@ -106,6 +118,16 @@ class Search extends React.Component{
         })
       }
       </div>
+      <ul>
+      {
+        this.state.usersSongs && this.state.usersSongs.map((song, i) => {
+          return (
+            <li>{song.name}</li>
+
+          )
+        })
+      }
+      </ul>
      </div>
     )
   }

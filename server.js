@@ -64,6 +64,7 @@ app.get('/songs', function(req, res) {
 app.get('/songs/search', (req, res) => {
   spotifyHelpers.getTrackSearchResults(req.query.query)
   .then((results) => {
+    console.log(results.tracks.items[0].album.images[1])
       res.json(results);
     });
 });
@@ -77,11 +78,10 @@ app.post('/songs', function(req, res) {
     link: req.body.link,
     userName: req.body.userName
   });
-
   User.findOne({name: req.body.userName})
   .then(function(user) {
     if (user) {
-      user.addedSongs.push(req.body.name);
+      user.addedSongs.push(newSong);
       user.save();
       return newSong.save();
     }
