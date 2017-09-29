@@ -124,7 +124,7 @@ class Search extends React.Component{
       {
         this.state.usersSongs && this.state.usersSongs.map((song, i) => {
           return (
-            <li>{song.name}</li>
+            <li>{song.name}, {song.artist}</li>
 
           )
         })
