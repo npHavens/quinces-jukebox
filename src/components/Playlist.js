@@ -37,7 +37,6 @@ class Playlist extends React.Component {
       this.setState({
         songs: response.data
       })
-      console.log(response.data)
     })
     .catch((err) => {
       console.error.bind(err);
@@ -111,9 +110,21 @@ class Playlist extends React.Component {
   };
 
   handlePlayButtonClick () {
-    const trackId = this.state.songs[0].link.split('track/')[1]
+    const trackId = this.state.songs[0].link.split('track/')[1];
+    const songId = this.state.songs[0]._id;
     this.setState({currentSong: this.state.songs[0]});
     this.playCurrentSong(this.state.deviceId, trackId);
+    this.removeSong(songId);
+  }
+
+  removeSong(songId) {
+    axios.delete('/song', {params: {id: songId}})
+    .then((response) => {
+      this.getAllSongs();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   render() {
