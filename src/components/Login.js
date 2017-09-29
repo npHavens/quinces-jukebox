@@ -12,7 +12,7 @@ const Login = (props) => {
     return users.map((user) => (
       <MenuItem
         key={user._id}
-        value={user.name}
+        value={user}
         primaryText={user.name}
       />
     ));

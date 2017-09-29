@@ -81,7 +81,7 @@ app.post('/songs', function(req, res) {
   User.findOne({name: req.body.userName})
   .then(function(user) {
     if (user) {
-      user.addedSongs.push(req.body.name);
+      user.addedSongs.push(newSong);
       user.save();
       return newSong.save();
     }
