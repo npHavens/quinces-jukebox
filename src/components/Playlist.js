@@ -4,6 +4,7 @@ import SpotifyWebApi from 'spotify-web-api-js';
 import PlaylistEntry from './PlaylistEntry';
 import {GridList, GridTile} from 'material-ui/GridList';
 import Player from './Player.js';
+import FlatButton from 'material-ui/FlatButton';
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -117,18 +118,28 @@ class Playlist extends React.Component {
   render() {
     const playerStyle = {
       display: 'inline-block',
-      width: '45%',
-      verticalAlign: 'top'
+      width: '50%',
+      verticalAlign: 'top',
+      textAlign: 'center'
     }
     const playListStyle = {
       display: 'inline-block',
-      width:'45%',
+      width:'50%',
+      float: 'right'
+    }
+    const playButtonStyle = {
+      width: '100%',
+      margin: '16px',
+      textAlign: 'center'
     }
       return (
         <div>
           {this.state.deviceId &&
-            <button onClick={this.handlePlayButtonClick}>Play top song</button>
+          <div style={playButtonStyle}>
+            <FlatButton onClick={this.handlePlayButtonClick} label="Play top song" primary={true} />
+          </div>
           }
+          <div>
           <div style={playerStyle}>
           {this.state.currentSong && <Player trackId={this.state.currentSong.link.split('track/')[1]}/>}
           </div>
@@ -136,11 +147,12 @@ class Playlist extends React.Component {
         {
           this.state.songs && this.state.songs.map((song, i) => {
             return (
-              <PlaylistEntry downVote={this.downVote} handlePlay={this.handlePlayButtonClick} upVote={this.upVote} Song={song} key={i} />
+              <PlaylistEntry index={i+1} downVote={this.downVote} handlePlay={this.handlePlayButtonClick} upVote={this.upVote} Song={song} key={i} />
 
             )
           })
         }
+        </div>
         </div>
         </div>
       )
