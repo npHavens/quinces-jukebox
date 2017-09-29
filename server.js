@@ -1,27 +1,30 @@
 // *** Express ***
 const express = require('express');
 const app = express();
-var cors = require('cors');
+const cors = require('cors');
+const env = require('./env/credentials.js')
 
 // *** Webpack ***
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
-const webpackConfig = require('./webpack.config.js');
+const webpackConfig = require(`./webpack.config${env.prod ? '.prod' : ''}.js`);
 const compiler = webpack(webpackConfig);
-app.use(webpackDevMiddleware(compiler, {
-  hot: true,
-  filename: 'bundle.js',
-  publicPath: '/',
-  stats: {
-  colors: true,
-  },
-  historyApiFallback: true,
-}));
 
+if (!env.prod) {
+  app.use(webpackDevMiddleware(compiler, {
+    hot: true,
+    filename: 'bundle.js',
+    publicPath: '/',
+    stats: {
+    colors: true,
+    },
+    historyApiFallback: true,
+  }));
+}
 app.use(cors());
 
 // *** Static Assets ***
-app.use(express.static(__dirname + '/www'));
+app.use(express.static(__dirname + '/public'));
 
 
 // *** Database ***
