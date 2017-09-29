@@ -107,6 +107,13 @@ app.put('/song', function(req, res) {
   });
 });
 
+app.delete('/song', function(req, res) {
+  const songID = req.body._id;
+  Song.remove({
+    "_id": ObjectId(songID)
+  });
+});
+
 // add user to users collection
 app.post('/signup', function(req, res) {
   var newUser = new User({
