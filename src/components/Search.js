@@ -38,6 +38,7 @@ class Search extends React.Component{
     })
     .then((response) => {
       this.setState({ results: response.data.tracks.items});
+      console.log(response.data.tracks.items);
     })
     .catch((err) => {
       console.error.bind(err);
@@ -96,6 +97,7 @@ class Search extends React.Component{
       this.setState({
        users: response.data
       })
+      console.log()
     })
     .catch((err) => {
       console.error.bind(err);
