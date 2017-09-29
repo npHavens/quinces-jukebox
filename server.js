@@ -109,10 +109,12 @@ app.put('/song', function(req, res) {
 });
 
 app.delete('/song', function(req, res) {
-  const songID = req.body._id;
+  const songId = req.query.id;
   Song.remove({
-    "_id": ObjectId(songID)
+    "_id": songId
   });
+  console.log('succesfully removed')
+  res.send('succesfully removed');
 });
 
 // add user to users collection
