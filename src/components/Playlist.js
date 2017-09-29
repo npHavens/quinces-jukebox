@@ -108,9 +108,9 @@ class Playlist extends React.Component {
     spotifyApi.play({device_id: deviceId, uris: ['spotify:track:' + trackId]});
   };
 
-  handlePlayButtonClick (song) {
-    const trackId = song.link.split('track/')[1]
-    this.setState({currentSong: song});
+  handlePlayButtonClick () {
+    const trackId = this.state.songs[0].link.split('track/')[1]
+    this.setState({currentSong: this.state.songs[0]});
     this.playCurrentSong(this.state.deviceId, trackId);
   }
 
@@ -126,6 +126,9 @@ class Playlist extends React.Component {
     }
       return (
         <div>
+          {this.state.deviceId &&
+            <button onClick={this.handlePlayButtonClick}>Play top song</button>
+          }
           <div style={playerStyle}>
           {this.state.currentSong && <Player trackId={this.state.currentSong.link.split('track/')[1]}/>}
           </div>
@@ -145,7 +148,3 @@ class Playlist extends React.Component {
 }
 
 export default Playlist;
-// REDUX CODE
-// const mapState = ({songs}) => ({songs});
-// const mapDispatch = {getAllSongs};
-// export default connect(mapState, mapDispatch)(Playlist);
