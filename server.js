@@ -78,7 +78,6 @@ app.post('/songs', function(req, res) {
     link: req.body.link,
     userName: req.body.userName
   });
-
   User.findOne({name: req.body.userName})
   .then(function(user) {
     if (user) {

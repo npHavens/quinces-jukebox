@@ -53,11 +53,15 @@ class Search extends React.Component{
     newSong.name = song.name;
     newSong.image = song.album.images[1].url;
     newSong.link = song.external_urls.spotify;
-    newSong.userName = this.state.currentUser;
+    if(this.state.currentUser === '') {
+      newSong.userName = 'anonymous';
+    } else {
+      newSong.userName = this.state.currentUser;
+    }
     axios.post('/songs', newSong)
     .then((response) => {
-      window.location.href = "/hostLogin";
-      // this.props.history.push('/');
+      // window.location.href = "/hostLogin";
+      this.props.history.push('/');
     })
     .catch((err) => {
       console.log(err);

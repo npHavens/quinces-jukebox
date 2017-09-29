@@ -16,5 +16,7 @@ new User({name: 'jessica'}).save();
 new User({name: 'nick'}).save();
 new User({name: 'vasanth'}).save();
 new User({name: 'joey'}).save();
+// Do not delete the anonymous user
+new User({name: 'anonymous'}).save();
 
 module.exports = User;
