@@ -37,6 +37,7 @@ class Playlist extends React.Component {
       this.setState({
         songs: response.data
       })
+      console.log(response.data)
     })
     .catch((err) => {
       console.error.bind(err);

@@ -76,7 +76,8 @@ app.post('/songs', function(req, res) {
     name: req.body.name,
     image: req.body.image,
     link: req.body.link,
-    userName: req.body.userName
+    userName: req.body.userName,
+    artist: req.body.artist
   });
   User.findOne({name: req.body.userName})
   .then(function(user) {

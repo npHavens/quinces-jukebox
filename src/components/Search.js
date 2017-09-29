@@ -38,7 +38,6 @@ class Search extends React.Component{
     })
     .then((response) => {
       this.setState({ results: response.data.tracks.items});
-      console.log(response.data.tracks.items);
     })
     .catch((err) => {
       console.error.bind(err);
@@ -55,6 +54,7 @@ class Search extends React.Component{
     newSong.name = song.name;
     newSong.image = song.album.images[1].url;
     newSong.link = song.external_urls.spotify;
+    newSong.artist = song.artists[0].name;
     if(this.state.currentUser === '') {
       newSong.userName = 'anonymous';
     } else {
