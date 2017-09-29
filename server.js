@@ -53,7 +53,7 @@ const spotifyHelpers = require('./helpers/spotifyHelpers.js');
 // *** Routes ***
 
 // fetch top 50 songs by netVoteCount from songs collection and send to client
-app.get('/songs', function(req, res) {
+app.get('/songs', (req, res) => {
   Song.find({}).sort({netVoteCount: 'descending'}).limit(50)
   .then(function(songs) {
     res.json(songs);
@@ -70,7 +70,7 @@ app.get('/songs/search', (req, res) => {
 });
 
 // add song to both user collection and songs collection
-app.post('/songs', function(req, res) {
+app.post('/songs', (req, res) => {
   console.log(req.body);
   var newSong = new Song({
     name: req.body.name,
@@ -93,7 +93,7 @@ app.post('/songs', function(req, res) {
 });
 
 // update vote on both songs collection and users collection
-app.put('/song', function(req, res) {
+app.put('/song', (req, res) => {
   Song.findOne({name: req.body.name})
   .then(function(song) {
     if (song) {
@@ -108,9 +108,9 @@ app.put('/song', function(req, res) {
   });
 });
 
-app.delete('/song', function(req, res) {
+app.delete('/song', (req, res) => {
   const songId = req.query.id;
-  Song.remove({'_id': songId}, function(err) {
+  Song.remove({'_id': songId}, (err) => {
     if (err) {
       console.log(err);
     }
@@ -119,13 +119,13 @@ app.delete('/song', function(req, res) {
 });
 
 // add user to users collection
-app.post('/signup', function(req, res) {
+app.post('/signup', (req, res) => {
   var newUser = new User({
     name: req.body.username
   });
 
   User.findOne({name: req.body.username})
-  .then(function(user) {
+  .then((user) => {
     if (!user) {
       newUser.save()
       .then(function() {
@@ -140,7 +140,7 @@ app.post('/signup', function(req, res) {
 
 app.get('/users', (req,res) => {
   User.find({})
-  .then(function(users) {
+  .then((users) => {
     res.json(users);
   });
 })
@@ -160,12 +160,12 @@ app.get('/callback', (req, res) => {
 });
 
 // send 404 to client
-app.get('/*', function(req, res) {
+app.get('/*', (req, res) => {
   res.status(404).send('Not Found');
 });
 
 // *** Server ***
-const server = app.listen(3000, function() {
+const server = app.listen(3000, () => {
   console.log('Listening at http://localhost:3000');
 });
 
