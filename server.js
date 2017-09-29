@@ -1,12 +1,13 @@
 // *** Express ***
 const express = require('express');
 const app = express();
-var cors = require('cors');
+const cors = require('cors');
+const env = require('./env/credentials.js')
 
 // *** Webpack ***
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
-const webpackConfig = require('./webpack.config.js');
+const webpackConfig = require(`./webpack.config${env.prod ? '.prod' : '' }.js`);
 const compiler = webpack(webpackConfig);
 app.use(webpackDevMiddleware(compiler, {
   hot: true,
