@@ -50,7 +50,7 @@ const PlaylistEntry = (props) => {
           <CardMedia>
             <img src={props.Song.image} alt="" />
           </CardMedia>
-          <CardTitle title={props.Song.name} subtitle="Artist name here" />
+          <CardTitle title={props.Song.name} subtitle={props.Song.artist} />
           <CardText>
             Added by: {props.Song.userName}
           </CardText>
