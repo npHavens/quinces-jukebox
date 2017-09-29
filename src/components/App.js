@@ -4,6 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Navbar from './Navbar';
 import Container from './Container';
+import Banner from './Banner';
 
 /**
  * A counter button: tap the button to increase the count.
@@ -23,6 +24,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <Banner/>
         <MuiThemeProvider>
           <Navbar/>
         </MuiThemeProvider>
