@@ -64,6 +64,7 @@ app.get('/songs', function(req, res) {
 app.get('/songs/search', (req, res) => {
   spotifyHelpers.getTrackSearchResults(req.query.query)
   .then((results) => {
+    console.log(results.tracks.items[0].album.images[1])
       res.json(results);
     });
 });

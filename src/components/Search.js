@@ -51,7 +51,7 @@ class Search extends React.Component{
   onAdd(song) {
     let newSong = {};
     newSong.name = song.name;
-    newSong.image = song.album.images[2].url;
+    newSong.image = song.album.images[1].url;
     newSong.link = song.external_urls.spotify;
     newSong.userName = this.state.currentUser;
     axios.post('/songs', newSong)

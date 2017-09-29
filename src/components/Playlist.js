@@ -115,13 +115,21 @@ class Playlist extends React.Component {
   }
 
   render() {
+    const playerStyle = {
+      display: 'inline-block',
+      width: '45%',
+      verticalAlign: 'top'
+    }
+    const playListStyle = {
+      display: 'inline-block',
+      width:'45%',
+    }
       return (
         <div>
+          <div style={playerStyle}>
           {this.state.currentSong && <Player trackId={this.state.currentSong.link.split('track/')[1]}/>}
-        <GridList
-        cellHeight={180}
-        cols={1}
-        >
+          </div>
+          <div style={playListStyle} >
         {
           this.state.songs && this.state.songs.map((song, i) => {
             return (
@@ -130,7 +138,7 @@ class Playlist extends React.Component {
             )
           })
         }
-        </GridList>
+        </div>
         </div>
       )
   }

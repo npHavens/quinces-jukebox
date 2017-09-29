@@ -10,19 +10,18 @@ import Search from './Search';
 
 class Container extends React.Component {
 
-
   render() {
     return (
-      <main>
       <MuiThemeProvider>
         <Switch>
+          <div>
           <Route exact path='/' component={Playlist}/>
           <Route exact path='/signup' component={Signup}/>
           <Route exact path='/login' component={Login}/>
           <Route exact path='/search' component={Search}/>
+          </div>
         </Switch>
       </MuiThemeProvider>
-    </main>
     )
   }
 }
