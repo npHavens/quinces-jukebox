@@ -121,7 +121,8 @@ class Playlist extends React.Component {
       display: 'inline-block',
       width: '50%',
       verticalAlign: 'top',
-      textAlign: 'center'
+      textAlign: 'center',
+      position: 'fixed'
     }
     const playListStyle = {
       display: 'inline-block',
