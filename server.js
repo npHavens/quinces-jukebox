@@ -110,10 +110,11 @@ app.put('/song', function(req, res) {
 
 app.delete('/song', function(req, res) {
   const songId = req.query.id;
-  Song.remove({
-    "_id": songId
+  Song.remove({'_id': songId}, function(err) {
+    if (err) {
+      console.log(err);
+    }
   });
-  console.log('succesfully removed')
   res.send('succesfully removed');
 });
 
