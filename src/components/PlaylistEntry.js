@@ -37,7 +37,6 @@ const PlaylistEntry = (props) => {
         </CardMedia>
         <CardTitle title={props.Song.name} subtitle="Artist name here" />
         <CardText>
-          <button onClick={handlePlayButtonClick}>Play</button>
           Added by: {props.Song.userName}
         </CardText>
         <CardActions>
