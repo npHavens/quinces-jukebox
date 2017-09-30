@@ -55,7 +55,7 @@ const spotifyHelpers = require('./helpers/spotifyHelpers.js');
 // fetch top 50 songs by netVoteCount from songs collection and send to client
 app.get('/songs', (req, res) => {
   Song.find({}).sort({netVoteCount: 'descending'}).limit(50)
-  .then(function(songs) {
+  .then((songs) => {
     res.json(songs);
   });
 });
@@ -80,14 +80,14 @@ app.post('/songs', (req, res) => {
     artist: req.body.artist
   });
   User.findOne({name: req.body.userName})
-  .then(function(user) {
+  .then((user) => {
     if (user) {
       user.addedSongs.push(newSong);
       user.save();
       return newSong.save();
     }
   })
-  .then(function() {
+  .then(() => {
     res.sendStatus(201);
   });
 });
