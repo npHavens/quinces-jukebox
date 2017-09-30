@@ -1,10 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import SearchEntry from './SearchEntry';
-import { Route } from 'react-router-dom';
 import Login from './Login';
 import { Link } from 'react-router-dom';
 
@@ -59,7 +57,6 @@ class Search extends React.Component{
     } else {
       newSong.userName = this.state.currentUser.name;
     }
-    console.log(newSong);
     axios.post('/songs', newSong)
     .then((response) => {
       window.location.href = "/hostLogin";
@@ -70,7 +67,6 @@ class Search extends React.Component{
   }
 
   handleUserChange (user){
-    console.log(user);
     this.setState({
       currentUser: user,
     });
@@ -85,10 +81,9 @@ class Search extends React.Component{
       this.setState({
        users: response.data
       })
-      console.log()
     })
     .catch((err) => {
-      console.error.bind(err);
+      console.log(err);
     })
   }
 
@@ -106,7 +101,7 @@ class Search extends React.Component{
       <div style={styles}>
         <div style={styles.inside}>
         <Login onChange={this.handleUserChange} users={this.state.users} currentUser={this.state.currentUser}/>
-        <TextField onChange={this.onChange}/>
+        <TextField name="selectUser" onChange={this.onChange}/>
         <br />
         <br />
         <Link to="/signup">Don't see your name? Sign up here!</Link>
@@ -122,17 +117,16 @@ class Search extends React.Component{
         })
       }
       </div>
-      <ul>
-      {
-        this.state.usersSongs && this.state.usersSongs.map((song, i) => {
-          return (
-            <li>{song.name}, {song.artist}</li>
-
-          )
-        })
-      }
-      </ul>
-      </div>
+          <ul>
+          {
+            this.state.usersSongs && this.state.usersSongs.map((song, i) => {
+              return (
+                <li key={i}>{song.name}, {song.artist}</li>
+              )
+            })
+          }
+          </ul>
+        </div>
      </div>
     )
   }
