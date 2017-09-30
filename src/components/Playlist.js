@@ -76,7 +76,7 @@ class Playlist extends React.Component {
       });
     }
   }
-  //synchronous function that gets token values from url parameters
+  //synchronous function that gets token values from url parameters and provides it for use with spotify-web-api-js
   getSpotifyToken() {
     const getHashParams = () => {
     let hashParams = {};
@@ -96,6 +96,7 @@ class Playlist extends React.Component {
     return access_token;
   }
 
+  //get the active device for the host user who is signed in to Spotify
   getDeviceId() {
     spotifyApi.getMyDevices()
       .then((data) => {
@@ -106,7 +107,10 @@ class Playlist extends React.Component {
   }
 
   playCurrentSong(deviceId, trackId) {
-    spotifyApi.play({device_id: deviceId, uris: ['spotify:track:' + trackId]});
+    spotifyApi.play({
+      device_id: deviceId,
+      uris: ['spotify:track:' + trackId]
+    });
   };
 
   handlePlayButtonClick () {
