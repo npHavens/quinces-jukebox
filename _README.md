@@ -14,7 +14,7 @@ A viewable, dynamic, interactive song playlist application.
 
 1. [Usage](#Usage)
 1. [Requirements](#requirements)
-1. [Development](#development)
+1. [Environment](#environment)
     1. [Installing Dependencies](#installing-dependencies)
 1. [Team](#team)
 1. [Contributing](#contributing)
