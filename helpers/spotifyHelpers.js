@@ -16,6 +16,7 @@ const searchAuthOptions = {
 };
 
 
+
 //use Spotify API credentials to get search results without needing to use Oauth
 exports.getTrackSearchResults = (queryString) => {
   return new Promise((resolve, reject) => {
