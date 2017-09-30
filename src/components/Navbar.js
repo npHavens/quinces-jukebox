@@ -16,7 +16,6 @@ class Navbar extends React.Component {
     }
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.handleClick = this.handleClick.bind(this);
   }
 
   handleToggle() {
@@ -24,9 +23,6 @@ class Navbar extends React.Component {
   }
   handleClose () {
     this.setState({open: false});
-  }
-  handleClick(e) {
-    console.log(e.target);
   }
 
   render() {

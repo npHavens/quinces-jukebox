@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import SpotifyWebApi from 'spotify-web-api-js';
 import PlaylistEntry from './PlaylistEntry';
-import {GridList, GridTile} from 'material-ui/GridList';
 import Player from './Player.js';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -21,14 +20,12 @@ class Playlist extends React.Component {
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);
     this.handlePlayButtonClick = this.handlePlayButtonClick.bind(this);
-    this.getUser = this.getUser.bind(this);
   }
 
   componentDidMount() {
     this.getSpotifyToken();
     this.getDeviceId();
     this.getAllSongs();
-    this.getUser();
   }
 
   getAllSongs() {
@@ -44,8 +41,6 @@ class Playlist extends React.Component {
   }
 
   upVote(song) {
-    // need to check if song as already been voted
-    // on by person
     song.vote = 1;
     axios.put('/song', song)
     .then((response) => {
@@ -57,8 +52,6 @@ class Playlist extends React.Component {
   }
 
   downVote(song) {
-    // need to check if song as already been voted
-    // on by person
     song.vote = -1;
     axios.put('/song', song)
     .then((response) => {
@@ -69,13 +62,6 @@ class Playlist extends React.Component {
     })
   }
 
-  getUser() {
-    if(this.props.location.state){
-      this.setState({
-        currentUser: this.props.location.state.currentUser
-      });
-    }
-  }
   //synchronous function that gets token values from url parameters
   getSpotifyToken() {
     const getHashParams = () => {
@@ -153,20 +139,19 @@ class Playlist extends React.Component {
           </div>
           }
           <div>
-          <div style={playerStyle}>
-          {this.state.currentSong && <Player trackId={this.state.currentSong.link.split('track/')[1]}/>}
+            <div style={playerStyle}>
+            {this.state.currentSong && <Player trackId={this.state.currentSong.link.split('track/')[1]}/>}
+            </div>
+            <div style={playListStyle} >
+          {
+            this.state.songs && this.state.songs.map((song, i) => {
+              return (
+                <PlaylistEntry index={i+1} downVote={this.downVote} handlePlay={this.handlePlayButtonClick} upVote={this.upVote} Song={song} key={i} />
+              )
+            })
+          }
+            </div>
           </div>
-          <div style={playListStyle} >
-        {
-          this.state.songs && this.state.songs.map((song, i) => {
-            return (
-              <PlaylistEntry index={i+1} downVote={this.downVote} handlePlay={this.handlePlayButtonClick} upVote={this.upVote} Song={song} key={i} />
-
-            )
-          })
-        }
-        </div>
-        </div>
         </div>
       )
   }
