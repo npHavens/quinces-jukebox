@@ -322,6 +322,9 @@ When writing any block of code that is logically subordinate to the line immedia
 * Optionally, some people use a capital letter only on functions that are written to be run with the keyword `new`.
 * Do not use all-caps for any variables. Some people use this pattern to indicate an intended "constant" variable, but the language does not offer true constants, only mutable variables.
 
+### Callbacks
+
+* Use promises instead of callbacks for asynchronous function calls when possible
 
 ### Minutia
 
