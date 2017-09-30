@@ -283,19 +283,38 @@ When writing any block of code that is logically subordinate to the line immedia
 * Do not break variable declarations onto mutiple lines.
 * Use a new line for each variable declaration.
 * See http://benalman.com/news/2012/05/multiple-var-statements-javascript/ for more details
+* Use ES6 const and let instead of var keyword
 
     ```javascript
     // good:
-    var ape;
-    var bat;
+    const ape;
+    let bat;
 
     // bad:
     var cat,
         dog
 
     // use sparingly:
-    var eel, fly;
+    let eel, fly;
     ```
+
+
+### Function declaration
+
+* Use ES6 arrow functions instead of function keyword
+* set the function as a const variable rather than just a function declaration
+
+    ```javascript
+    // good:
+    const foo = (bar) => {
+      do something;
+    };
+
+
+    // bad:
+    function(bar) {
+      do something;
+    }
 
 ### Capital letters in variable names
 
