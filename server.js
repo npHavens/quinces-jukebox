@@ -128,7 +128,7 @@ app.post('/signup', (req, res) => {
   .then((user) => {
     if (!user) {
       newUser.save()
-      .then(function() {
+      .then(() => {
         req.session.username = req.body.username;
         res.sendStatus(201);
       });
